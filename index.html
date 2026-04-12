@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Sabor de Infância</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: #eaddcf; 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 10px;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            background-color: #fffaf5;
+            width: 100%;
+            max-width: 550px;
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            text-align: center;
+            border: 1px solid #d7ccc8;
+        }
+
+        header { margin-bottom: 30px; }
+
+        .logo-placeholder {
+            width: 220px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Garante que não haja fundo nenhum atrás da vovó */
+            background: transparent !important;
+            border: none !important;
+        }
+
+        .logo-placeholder img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #d35400;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            margin-top: 5px;
+            color: #8d6e63;
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+
+        .produto {
+            background: white;
+            margin: 15px auto;
+            padding: 10px 15px;
+            border-radius: 15px;
+            border-left: 8px solid #f39c12;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .produto:hover {
+            transform: translateY(-3px);
+            border-left-color: #d35400;
+        }
+
+        .info-produto {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .foto-empada {
+            width: 65px;
+            height: 65px;
+            border-radius: 10px;
+            object-fit: cover;
+            background-color: #f3e5d8;
+            border: 1px solid #eee;
+        }
+
+        .produto span {
+            font-weight: bold;
+            color: #4e342e;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        input[type="number"] {
+            width: 45px;
+            padding: 8px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: #4e342e;
+            outline: none;
+        }
+
+        button {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+            transition: all 0.3s;
+            width: 80%;
+        }
+
+        button:hover {
+            box-shadow: 0 15px 25px rgba(46, 204, 113, 0.4);
+            transform: scale(1.03);
+        }
+
+        footer { margin-top: 30px; font-size: 0.8rem; color: #bcaaa4; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <div class="logo-placeholder">
+                <img src="vovo_final.png.png" alt="Logo Sabor de Infância">
+            </div>
+            <h1>Sabor de Infância</h1>
+            <p class="subtitle">Empadinhas Artesanais</p>
+        </header>
+
+        <div class="produto">
+            <div class="info-produto">
+               <img src="doce.png" class="foto-empada">
+                <span>Empadinha de Leite condensado - R$ 5,00</span>
+            </div>
+            <input type="number" id="qtd_empadas" value="0" min="0">
+        </div>
+
+        <div class="produto">
+            <div class="info-produto">
+                <img src="doce.png" class="foto-empada">
+                <span>Kit 4 empadinhas - R$ 15,00</span>
+            </div>
+            <input type="number" id="qtd_kit" value="0" min="0">
+        </div>
+
+        <button onclick="finalizar()">Enviar Pedido</button>
+
+        <footer>© 2026 Sabor de Infância - Serra, ES</footer>
+    </div>
+
+    <script>
+        function finalizar() {
+            const telefone = "5527981130000"; 
+            const qtdLeite = document.getElementById('qtd_empadas').value;
+            const qtdKit = document.getElementById('qtd_kit').value;
+
+            let mensagem = "Olá! Gostaria de fazer um pedido no Sabor de Infância:\n\n";
+            let temPedido = false;
+
+            if (qtdLeite > 0) { mensagem += `* ${qtdLeite}x Empadinha de Leite Condensado\n`; temPedido = true; }
+            if (qtdKit > 0) { mensagem += `* ${qtdKit}x Kit 4 empadas\n`; temPedido = true; }
+
+            if (!temPedido) { alert("Por favor, selecione a quantidade de pelo menos um item."); return; }
+
+            const linkWhatsApp = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+            window.open(linkWhatsApp, '_blank');
+        }
+    </script>
+
+</body>
+</html>
