@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sabor de Infância</title>
     <style>
         body {
@@ -10,7 +11,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 40px 10px;
+            padding: 20px 10px; /* Reduzi o padding para ganhar espaço */
             margin: 0;
             min-height: 100vh;
         }
@@ -18,25 +19,25 @@
         .app-container {
             background-color: #fffaf5;
             width: 100%;
-            max-width: 550px;
-            padding: 40px 20px;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            /* No PC ele respeita 550px, no celular ele ocupa 95% da tela */
+            max-width: 500px; 
+            padding: 30px 15px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             text-align: center;
             border: 1px solid #d7ccc8;
+            box-sizing: border-box; /* Importante para não vazar a borda */
         }
 
-        header { margin-bottom: 30px; }
+        header { margin-bottom: 25px; }
 
         .logo-placeholder {
-            width: 220px;
+            width: 180px; /* Ajustei para não ficar gigante no celular */
             margin: 0 auto 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Garante que não haja fundo nenhum atrás da vovó */
             background: transparent !important;
-            border: none !important;
         }
 
         .logo-placeholder img {
@@ -46,92 +47,103 @@
         }
 
         h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem; /* Diminuí um pouco a fonte */
             color: #d35400;
             margin: 0;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .subtitle {
             margin-top: 5px;
             color: #8d6e63;
             font-style: italic;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .produto {
             background: white;
-            margin: 15px auto;
-            padding: 10px 15px;
-            border-radius: 15px;
-            border-left: 8px solid #f39c12;
+            margin: 12px auto;
+            padding: 10px;
+            border-radius: 12px;
+            border-left: 6px solid #f39c12;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-        }
-
-        .produto:hover {
-            transform: translateY(-3px);
-            border-left-color: #d35400;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
         .info-produto {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
+            text-align: left;
         }
 
         .foto-empada {
-            width: 65px;
-            height: 65px;
-            border-radius: 10px;
+            width: 55px;
+            height: 55px;
+            border-radius: 8px;
             object-fit: cover;
             background-color: #f3e5d8;
-            border: 1px solid #eee;
         }
 
         .produto span {
             font-weight: bold;
             color: #4e342e;
-            text-align: left;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            line-height: 1.2;
         }
 
         input[type="number"] {
-            width: 45px;
-            padding: 8px;
+            width: 40px;
+            padding: 6px;
             border: 2px solid #eee;
-            border-radius: 8px;
+            border-radius: 6px;
             text-align: center;
             font-weight: bold;
-            color: #4e342e;
-            outline: none;
+        }
+
+        /* CHECKOUT MOBILE */
+        .checkout-container {
+            background: white;
+            margin: 20px auto;
+            padding: 15px;
+            border-radius: 15px;
+            text-align: left;
+            border: 1px solid #eee;
+        }
+
+        .checkout-container h3 {
+            color: #d35400;
+            margin-top: 0;
+            font-size: 1rem;
+        }
+
+        .checkout-container input, .checkout-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
         }
 
         button {
             background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white;
             border: none;
-            padding: 18px 40px;
+            padding: 15px 20px;
             border-radius: 50px;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
-            transition: all 0.3s;
-            width: 80%;
+            width: 100%; /* Botão ocupa a largura total no celular */
+            box-shadow: 0 8px 15px rgba(46, 204, 113, 0.2);
         }
 
-        button:hover {
-            box-shadow: 0 15px 25px rgba(46, 204, 113, 0.4);
-            transform: scale(1.03);
-        }
-
-        footer { margin-top: 30px; font-size: 0.8rem; color: #bcaaa4; }
+        footer { margin-top: 25px; font-size: 0.75rem; color: #bcaaa4; }
     </style>
 </head>
 <body>
@@ -161,7 +173,20 @@
             <input type="number" id="qtd_kit" value="0" min="0">
         </div>
 
-        <button onclick="finalizar()">Enviar Pedido</button>
+        <div class="checkout-container">
+            <h3>Dados para Entrega</h3>
+            <input type="text" id="nome_cliente" placeholder="Seu Nome completo">
+            <input type="text" id="endereco" placeholder="Rua, número e bairro">
+            <input type="text" id="referencia" placeholder="Ponto de referência">
+            
+            <select id="pagamento">
+                <option value="Pix">Pix</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Cartão">Cartão</option>
+            </select>
+        </div>
+
+        <button onclick="finalizar()">Enviar Pedido pelo WhatsApp</button>
 
         <footer>© 2026 Sabor de Infância - Serra, ES</footer>
     </div>
@@ -171,14 +196,29 @@
             const telefone = "5527981130000"; 
             const qtdLeite = document.getElementById('qtd_empadas').value;
             const qtdKit = document.getElementById('qtd_kit').value;
+            const nome = document.getElementById('nome_cliente').value;
+            const endereco = document.getElementById('endereco').value;
+            const ref = document.getElementById('referencia').value;
+            const pgto = document.getElementById('pagamento').value;
 
-            let mensagem = "Olá! Gostaria de fazer um pedido no Sabor de Infância:\n\n";
-            let temPedido = false;
+            if (qtdLeite == 0 && qtdKit == 0) {
+                alert("Selecione pelo menos um item!");
+                return;
+            }
 
-            if (qtdLeite > 0) { mensagem += `* ${qtdLeite}x Empadinha de Leite Condensado\n`; temPedido = true; }
-            if (qtdKit > 0) { mensagem += `* ${qtdKit}x Kit 4 empadas\n`; temPedido = true; }
+            if (!nome || !endereco) {
+                alert("Preencha seu nome e endereço!");
+                return;
+            }
 
-            if (!temPedido) { alert("Por favor, selecione a quantidade de pelo menos um item."); return; }
+            let mensagem = `*NOVO PEDIDO - SABOR DE INFÂNCIA*\n\n`;
+            mensagem += `👤 *Cliente:* ${nome}\n`;
+            mensagem += `📍 *Endereço:* ${endereco}\n`;
+            if (ref) mensagem += `📍 *Ref:* ${ref}\n`;
+            mensagem += `💳 *Pagamento:* ${pgto}\n\n`;
+            mensagem += `--- *ITENS* ---\n`;
+            if (qtdLeite > 0) mensagem += `• ${qtdLeite}x Empadinha de Leite Condensado\n`;
+            if (qtdKit > 0) mensagem += `• ${qtdKit}x Kit 4 empadinhas\n`;
 
             const linkWhatsApp = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
             window.open(linkWhatsApp, '_blank');
