@@ -72,8 +72,7 @@
             align-items: center;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             transition: transform 0.2s;
-            /* Altura mínima para padronizar o tamanho das boxes */
-            min-height: 110px; 
+            min-height: 110px;
         }
 
         .produto:hover {
@@ -107,7 +106,6 @@
             font-weight: bold;
             color: #4e342e;
             font-size: 0.95rem;
-            line-height: 1.2;
         }
 
         .preco-item {
@@ -160,6 +158,10 @@
             outline: none;
         }
 
+        .checkout-container input:focus {
+            border-color: #f39c12;
+        }
+
         .pagamento-label {
             display: block;
             margin-top: 10px;
@@ -185,7 +187,7 @@
 
         button:hover {
             box-shadow: 0 15px 25px rgba(46, 204, 113, 0.4);
-            transform: scale(1.02);
+            transform: scale(1.03);
         }
 
         footer { margin-top: 30px; font-size: 0.8rem; color: #bcaaa4; }
@@ -198,7 +200,7 @@
             <div class="logo-placeholder">
                 <img src="vovo_final.png.png" alt="Logo Sabor de Infância">
             </div>
-            <h1>Sabor de Infância</h1>
+            <h1>Delivery</h1>
             <p class="subtitle">Empadinhas Artesanais</p>
         </header>
 
@@ -237,8 +239,10 @@
 
         <div class="checkout-container">
             <h3>Dados para Entrega</h3>
-            <input type="text" id="nome_cliente" placeholder="Seu Nome completo">
-            <input type="text" id="endereco" placeholder="Rua, número e bairro">
+            <input type="text" id="nome_cliente" placeholder="Nome completo">
+            <input type="text" id="rua" placeholder="Rua">
+            <input type="text" id="numero" placeholder="Número">
+            <input type="text" id="bairro" placeholder="Bairro">
             <input type="text" id="referencia" placeholder="Ponto de referência (opcional)">
             
             <label class="pagamento-label">Forma de Pagamento:</label>
@@ -256,14 +260,16 @@
 
     <script>
         function finalizar() {
-            const telefone = "5527981130000"; 
+            const telefone = "5527997202273"; 
             
             const qtdBase = document.getElementById('qtd_base').value;
             const qtdLanche = document.getElementById('qtd_lanche').value;
             const qtdFamilia = document.getElementById('qtd_familia').value;
             
             const nome = document.getElementById('nome_cliente').value;
-            const endereco = document.getElementById('endereco').value;
+            const rua = document.getElementById('rua').value;
+            const numero = document.getElementById('numero').value;
+            const bairro = document.getElementById('bairro').value;
             const ref = document.getElementById('referencia').value;
             const pgto = document.getElementById('pagamento').value;
 
@@ -272,21 +278,21 @@
                 return;
             }
 
-            if (!nome || !endereco) {
-                alert("Por favor, preencha seu nome e endereço!");
+            if (!nome || !rua || !numero || !bairro) {
+                alert("Por favor, preencha nome, rua, número e bairro para a entrega!");
                 return;
             }
 
             let mensagem = `*NOVO PEDIDO - SABOR DE INFÂNCIA*\n\n`;
             mensagem += `👤 *Cliente:* ${nome}\n`;
-            mensagem += `📍 *Endereço:* ${endereco}\n`;
+            mensagem += `📍 *Endereço:* ${rua}, nº ${numero} - ${bairro}\n`;
             if (ref) mensagem += `📍 *Ref:* ${ref}\n`;
-            mensagem += `💳 *Pagamento:* ${pgto}\n\n`;
+            mensagem += `💳 *Forma de Pagamento:* ${pgto}\n\n`;
             
             mensagem += `--- *ITENS DO PEDIDO* ---\n`;
-            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 empadas)\n`;
-            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 empadas)\n`;
-            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 empadas)\n`;
+            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 empadinhas)\n`;
+            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 empadinhas)\n`;
+            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 empadinhas)\n`;
 
             const linkWhatsApp = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
             window.open(linkWhatsApp, '_blank');
