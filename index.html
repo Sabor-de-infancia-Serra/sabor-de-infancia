@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sabor de Infância</title>
+    <title>Sabor de Infância - Delivery</title>
     <style>
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
@@ -208,7 +208,7 @@
             <div class="info-produto">
                <img src="kit_4_empadas.png" class="foto-empada">
                <div class="texto-produto">
-                   <span class="nome-item">Kit Base (4 Empadinhas Leite Condensado)</span>
+                   <span class="nome-item">Kit Base (4 Empadinhas)</span>
                    <span class="preco-item">R$ 12,00</span>
                </div>
             </div>
@@ -219,7 +219,7 @@
             <div class="info-produto">
                 <img src="kit_6_empadas.png" class="foto-empada">
                 <div class="texto-produto">
-                    <span class="nome-item">Kit Lanche (6 Empadinhas Leite Condensado)</span>
+                    <span class="nome-item">Kit Lanche (6 Empadinhas)</span>
                     <span class="preco-item">R$ 16,90</span>
                 </div>
             </div>
@@ -230,7 +230,7 @@
             <div class="info-produto">
                 <img src="kit_10_empadas.png" class="foto-empada">
                 <div class="texto-produto">
-                    <span class="nome-item">Kit Família (10 Empadinhas Leite Condensado)</span>
+                    <span class="nome-item">Kit Família (10 Empadinhas)</span>
                     <span class="preco-item">R$ 25,00</span>
                 </div>
             </div>
@@ -240,15 +240,15 @@
         <div class="checkout-container">
             <h3>Dados para Entrega</h3>
             <input type="text" id="nome_cliente" placeholder="Nome completo">
-            <input type="text" id="rua" placeholder="Rua">
-            <input type="text" id="numero" placeholder="Número">
-            <input type="text" id="bairro" placeholder="Bairro">
-            <input type="text" id="referencia" placeholder="Ponto de referência (opcional)">
+            <input type="text" id="condominio" placeholder="Nome do Condomínio">
+            <input type="text" id="casa_apto" placeholder="Nº da Casa ou Apartamento">
+            <input type="text" id="complemento" placeholder="Complemento (Ex: Bloco, andar)">
             
             <label class="pagamento-label">Forma de Pagamento:</label>
             <select id="pagamento">
                 <option value="Pix">Pix</option>
                 <option value="Dinheiro">Dinheiro (Levar troco)</option>
+                <option value="Cartão">Cartão (Crédito/Débito)</option>
                 <option value="PicPay">PicPay</option>
             </select>
         </div>
@@ -267,10 +267,9 @@
             const qtdFamilia = document.getElementById('qtd_familia').value;
             
             const nome = document.getElementById('nome_cliente').value;
-            const rua = document.getElementById('rua').value;
-            const numero = document.getElementById('numero').value;
-            const bairro = document.getElementById('bairro').value;
-            const ref = document.getElementById('referencia').value;
+            const condominio = document.getElementById('condominio').value;
+            const casa = document.getElementById('casa_apto').value;
+            const complemento = document.getElementById('complemento').value;
             const pgto = document.getElementById('pagamento').value;
 
             if (qtdBase == 0 && qtdLanche == 0 && qtdFamilia == 0) {
@@ -278,16 +277,17 @@
                 return;
             }
 
-            if (!nome || !rua || !numero || !bairro) {
-                alert("Por favor, preencha nome, rua, número e bairro para a entrega!");
+            if (!nome || !condominio || !casa) {
+                alert("Por favor, preencha nome, condomínio e número da casa/apto!");
                 return;
             }
 
             let mensagem = `*NOVO PEDIDO - SABOR DE INFÂNCIA*\n\n`;
             mensagem += `👤 *Cliente:* ${nome}\n`;
-            mensagem += `📍 *Endereço:* ${rua}, nº ${numero} - ${bairro}\n`;
-            if (ref) mensagem += `📍 *Ref:* ${ref}\n`;
-            mensagem += `💳 *Forma de Pagamento:* ${pgto}\n\n`;
+            mensagem += `🏢 *Condomínio:* ${condominio}\n`;
+            mensagem += `🏠 *Nº:* ${casa}\n`;
+            if (complemento) mensagem += `📍 *Comp:* ${complemento}\n`;
+            mensagem += `💳 *Pagamento:* ${pgto}\n\n`;
             
             mensagem += `--- *ITENS DO PEDIDO* ---\n`;
             if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 empadinhas)\n`;
