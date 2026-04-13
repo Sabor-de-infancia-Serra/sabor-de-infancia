@@ -75,11 +75,6 @@
             min-height: 110px;
         }
 
-        .produto:hover {
-            transform: translateY(-3px);
-            border-left-color: #d35400;
-        }
-
         .info-produto {
             display: flex;
             align-items: center;
@@ -126,9 +121,24 @@
             outline: none;
         }
 
+        /* BOX DO VALOR TOTAL AJUSTADA (Cor Clara) */
+        .total-box {
+            background: #fff3e0; /* Tom de creme bem clarinho */
+            color: #d35400;      /* Texto em laranja para contraste */
+            margin: 20px auto;
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 2px solid #f39c12; /* Borda laranja para combinar com os produtos */
+        }
+
         .checkout-container {
             background: white;
-            margin: 25px auto;
+            margin: 10px auto 25px;
             padding: 20px;
             border-radius: 20px;
             text-align: left;
@@ -158,18 +168,6 @@
             outline: none;
         }
 
-        .checkout-container input:focus {
-            border-color: #f39c12;
-        }
-
-        .pagamento-label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #8d6e63;
-            font-size: 0.9rem;
-        }
-
         button {
             background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white;
@@ -179,15 +177,13 @@
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
-            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
-            transition: all 0.3s;
             width: 100%;
+            transition: all 0.3s;
         }
 
         button:hover {
-            box-shadow: 0 15px 25px rgba(46, 204, 113, 0.4);
-            transform: scale(1.03);
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
         }
 
         footer { margin-top: 30px; font-size: 0.8rem; color: #bcaaa4; }
@@ -212,7 +208,7 @@
                    <span class="preco-item">R$ 12,00</span>
                </div>
             </div>
-            <input type="number" id="qtd_base" value="0" min="0">
+            <input type="number" id="qtd_base" value="0" min="0" oninput="atualizarTotal()">
         </div>
 
         <div class="produto">
@@ -223,7 +219,7 @@
                     <span class="preco-item">R$ 16,90</span>
                 </div>
             </div>
-            <input type="number" id="qtd_lanche" value="0" min="0">
+            <input type="number" id="qtd_lanche" value="0" min="0" oninput="atualizarTotal()">
         </div>
 
         <div class="produto">
@@ -234,7 +230,12 @@
                     <span class="preco-item">R$ 25,00</span>
                 </div>
             </div>
-            <input type="number" id="qtd_familia" value="0" min="0">
+            <input type="number" id="qtd_familia" value="0" min="0" oninput="atualizarTotal()">
+        </div>
+
+        <div class="total-box">
+            <span>Total do Pedido:</span>
+            <span id="valor_total_exibido">R$ 0,00</span>
         </div>
 
         <div class="checkout-container">
@@ -247,7 +248,8 @@
             <label class="pagamento-label">Forma de Pagamento:</label>
             <select id="pagamento">
                 <option value="Pix">Pix</option>
-                <option value="Dinheiro">Dinheiro (Trazer troco)</option>
+                <option value="Dinheiro">Dinheiro (Levar troco)</option>
+                <option value="Cartão">Cartão (Crédito/Débito)</option>
                 <option value="PicPay">PicPay</option>
             </select>
         </div>
@@ -258,6 +260,17 @@
     </div>
 
     <script>
+        function atualizarTotal() {
+            const qtdBase = parseInt(document.getElementById('qtd_base').value) || 0;
+            const qtdLanche = parseInt(document.getElementById('qtd_lanche').value) || 0;
+            const qtdFamilia = parseInt(document.getElementById('qtd_familia').value) || 0;
+
+            const total = (qtdBase * 12.00) + (qtdLanche * 16.90) + (qtdFamilia * 25.00);
+            
+            document.getElementById('valor_total_exibido').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            return total.toFixed(2).replace('.', ',');
+        }
+
         function finalizar() {
             const telefone = "5527981130000"; 
             
@@ -270,6 +283,8 @@
             const casa = document.getElementById('casa_apto').value;
             const complemento = document.getElementById('complemento').value;
             const pgto = document.getElementById('pagamento').value;
+
+            const totalPedido = atualizarTotal();
 
             if (qtdBase == 0 && qtdLanche == 0 && qtdFamilia == 0) {
                 alert("Por favor, selecione a quantidade de pelo menos um item.");
@@ -291,12 +306,13 @@
             mensagem += `--- *ITENS DO PEDIDO* ---\n`;
             if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 empadinhas)\n`;
             if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 empadinhas)\n`;
-            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 empadinhas)\n`;
+            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 empadinhas)\n\n`;
+
+            mensagem += `💰 *VALOR TOTAL: R$ ${totalPedido}*`;
 
             const linkWhatsApp = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
             window.open(linkWhatsApp, '_blank');
         }
     </script>
-
 </body>
 </html>
