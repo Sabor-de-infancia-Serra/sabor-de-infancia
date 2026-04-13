@@ -5,13 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sabor de Infância - Delivery</title>
     <style>
+        :root {
+            --primary: #d35400;
+            --primary-light: #fff3e0;
+            --secondary: #27ae60;
+            --text: #4e342e;
+            --bg: #eaddcf;
+        }
+
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: #eaddcf; 
+            background-color: var(--bg); 
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 40px 10px;
+            padding: 20px 10px;
             margin: 0;
             min-height: 100vh;
         }
@@ -19,174 +27,191 @@
         .app-container {
             background-color: #fffaf5;
             width: 100%;
-            max-width: 550px;
-            padding: 40px 20px;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            max-width: 500px;
+            padding: 30px 15px;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             text-align: center;
             border: 1px solid #d7ccc8;
             box-sizing: border-box;
+            overflow: hidden;
         }
 
-        header { margin-bottom: 30px; }
-
-        .logo-placeholder {
-            width: 180px;
-            margin: 0 auto 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: transparent !important;
-            border: none !important;
+        header { 
+            margin-bottom: 30px; 
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #d7ccc8;
         }
 
         .logo-placeholder img {
-            width: 100%;
+            width: 140px;
             height: auto;
-            display: block;
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+            margin-bottom: 10px;
         }
 
         h1 {
-            font-size: 1.8rem;
-            color: #d35400;
+            font-size: 1.5rem;
+            color: var(--primary);
             margin: 0;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
         }
 
         .subtitle {
             margin-top: 5px;
             color: #8d6e63;
             font-style: italic;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .produto {
             background: white;
             margin: 15px auto;
-            padding: 12px 15px;
-            border-radius: 15px;
-            border-left: 8px solid #f39c12;
+            padding: 15px;
+            border-radius: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-            min-height: 110px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            transition: transform 0.3s;
+            border: 1px solid #fdf2e9;
         }
 
         .info-produto {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             text-align: left;
-            flex: 1;
         }
 
         .foto-empada {
-            width: 65px;
-            height: 65px;
-            border-radius: 10px;
+            width: 70px;
+            height: 70px;
+            border-radius: 18px;
             object-fit: cover;
-            background-color: #f3e5d8;
-            border: 1px solid #eee;
-        }
-
-        .texto-produto {
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
 
         .nome-item {
-            font-weight: bold;
-            color: #4e342e;
+            display: block;
+            font-weight: 700;
+            color: var(--text);
             font-size: 0.95rem;
+            margin-bottom: 4px;
         }
 
         .preco-item {
-            color: #d35400;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-top: 4px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1rem;
         }
 
-        input[type="number"] {
-            width: 45px;
-            padding: 8px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: bold;
-            color: #4e342e;
-            outline: none;
+        .qty-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: 50px;
         }
 
-        /* BOX DO VALOR TOTAL AJUSTADA (Cor Clara) */
+        .btn-qty {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btn-qty:active { transform: scale(0.9); }
+
+        .qty-value {
+            font-weight: bold;
+            min-width: 20px;
+            color: var(--text);
+        }
+
         .total-box {
-            background: #fff3e0; /* Tom de creme bem clarinho */
-            color: #d35400;      /* Texto em laranja para contraste */
-            margin: 20px auto;
-            padding: 15px;
-            border-radius: 15px;
+            background: var(--primary-light);
+            color: var(--text);
+            margin: 25px 0;
+            padding: 20px;
+            border-radius: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            border: 2px solid #f39c12; /* Borda laranja para combinar com os produtos */
+            border: 2px dashed var(--primary);
+        }
+
+        #valor_total_exibido {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            font-weight: 800;
         }
 
         .checkout-container {
-            background: white;
-            margin: 10px auto 25px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            margin: 20px 0;
             padding: 20px;
-            border-radius: 20px;
+            border-radius: 30px;
             text-align: left;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border: 1px solid #eee;
-        }
-
-        .checkout-container h3 {
-            color: #d35400;
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            border: 1px solid white;
         }
 
         .checkout-container input, .checkout-container select {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             margin: 8px 0;
-            border: 1px solid #eee;
-            border-radius: 10px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
             box-sizing: border-box;
-            font-family: inherit;
-            background-color: #fdfdfd;
-            color: #4e342e;
+            background: white;
+            font-size: 14px;
             outline: none;
         }
 
-        button {
-            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        #box_troco {
+            display: none;
+            margin-top: 5px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        button.btn-finalizar {
+            background: linear-gradient(135deg, var(--secondary), #2ecc71);
             color: white;
             border: none;
-            padding: 18px 40px;
-            border-radius: 50px;
+            padding: 20px;
+            border-radius: 25px;
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             width: 100%;
+            box-shadow: 0 10px 20px rgba(39, 174, 96, 0.2);
             transition: all 0.3s;
+            border-bottom: 4px solid #1e8449;
         }
 
-        button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+        button.btn-finalizar:active {
+            transform: translateY(4px);
+            border-bottom: 0;
         }
 
-        footer { margin-top: 30px; font-size: 0.8rem; color: #bcaaa4; }
+        footer { margin-top: 30px; font-size: 0.75rem; color: #bcaaa4; }
     </style>
 </head>
 <body>
@@ -197,78 +222,115 @@
                 <img src="logo_nova.png" alt="Logo Sabor de Infância">
             </div>
             <h1>Delivery</h1>
-            <p class="subtitle">Empadinhas Artesanais</p>
+            <p class="subtitle">Doces Recordações em cada Mordida</p>
         </header>
 
         <div class="produto">
             <div class="info-produto">
                <img src="kit_4_empadas.png" class="foto-empada">
-               <div class="texto-produto">
-                   <span class="nome-item">Kit Base (4 Empadinhas)</span>
+               <div>
+                   <span class="nome-item">Kit Base (4 unidades)</span>
                    <span class="preco-item">R$ 12,00</span>
                </div>
             </div>
-            <input type="number" id="qtd_base" value="0" min="0" oninput="atualizarTotal()">
+            <div class="qty-selector">
+                <button class="btn-qty" onclick="changeQty('qtd_base', -1)">-</button>
+                <span class="qty-value" id="val_qtd_base">0</span>
+                <button class="btn-qty" onclick="changeQty('qtd_base', 1)">+</button>
+            </div>
+            <input type="hidden" id="qtd_base" value="0">
         </div>
 
         <div class="produto">
             <div class="info-produto">
                 <img src="kit_6_empadas.png" class="foto-empada">
-                <div class="texto-produto">
-                    <span class="nome-item">Kit Lanche (6 Empadinhas)</span>
+                <div>
+                    <span class="nome-item">Kit Lanche (6 unidades)</span>
                     <span class="preco-item">R$ 16,90</span>
                 </div>
             </div>
-            <input type="number" id="qtd_lanche" value="0" min="0" oninput="atualizarTotal()">
+            <div class="qty-selector">
+                <button class="btn-qty" onclick="changeQty('qtd_lanche', -1)">-</button>
+                <span class="qty-value" id="val_qtd_lanche">0</span>
+                <button class="btn-qty" onclick="changeQty('qtd_lanche', 1)">+</button>
+            </div>
+            <input type="hidden" id="qtd_lanche" value="0">
         </div>
 
         <div class="produto">
             <div class="info-produto">
                 <img src="kit_10_empadas.png" class="foto-empada">
-                <div class="texto-produto">
-                    <span class="nome-item">Kit Família (10 Empadinhas)</span>
+                <div>
+                    <span class="nome-item">Kit Família (10 unidades)</span>
                     <span class="preco-item">R$ 25,00</span>
                 </div>
             </div>
-            <input type="number" id="qtd_familia" value="0" min="0" oninput="atualizarTotal()">
+            <div class="qty-selector">
+                <button class="btn-qty" onclick="changeQty('qtd_familia', -1)">-</button>
+                <span class="qty-value" id="val_qtd_familia">0</span>
+                <button class="btn-qty" onclick="changeQty('qtd_familia', 1)">+</button>
+            </div>
+            <input type="hidden" id="qtd_familia" value="0">
         </div>
 
         <div class="total-box">
-            <span>Total do Pedido:</span>
+            <span>TOTAL DO PEDIDO</span>
             <span id="valor_total_exibido">R$ 0,00</span>
         </div>
 
         <div class="checkout-container">
-            <h3>Dados para Entrega</h3>
-            <input type="text" id="nome_cliente" placeholder="Nome completo">
+            <input type="text" id="nome_cliente" placeholder="Seu Nome completo">
             <input type="text" id="condominio" placeholder="Nome do Condomínio">
-            <input type="text" id="casa_apto" placeholder="Nº da Casa ou Apartamento">
-            <input type="text" id="complemento" placeholder="Complemento (Ex: Bloco, andar)">
+            <input type="text" id="casa_apto" placeholder="Nº Casa / Apartamento">
+            <input type="text" id="complemento" placeholder="Complemento (Bloco, Torre...)">
             
-            <label class="pagamento-label">Forma de Pagamento:</label>
-            <select id="pagamento">
+            <select id="pagamento" onchange="verificarTroco()">
+                <option value="" disabled selected>Forma de Pagamento</option>
                 <option value="Pix">Pix</option>
-                <option value="Dinheiro">Dinheiro (Levar troco)</option>
-                <option value="Cartão">Cartão (Crédito/Débito)</option>
+                <option value="Dinheiro">Dinheiro</option>
                 <option value="PicPay">PicPay</option>
             </select>
+
+            <div id="box_troco">
+                <input type="text" id="valor_troco" placeholder="Troco para quanto?">
+            </div>
         </div>
 
-        <button onclick="finalizar()">Enviar Pedido pelo WhatsApp</button>
+        <button class="btn-finalizar" onclick="finalizar()">ENVIAR PEDIDO PELO WHATSAPP</button>
 
         <footer>© 2026 Sabor de Infância - Serra, ES</footer>
     </div>
 
     <script>
+        function changeQty(id, delta) {
+            const input = document.getElementById(id);
+            const display = document.getElementById('val_' + id);
+            let newVal = parseInt(input.value) + delta;
+            if (newVal < 0) newVal = 0;
+            input.value = newVal;
+            display.innerText = newVal;
+            atualizarTotal();
+        }
+
         function atualizarTotal() {
             const qtdBase = parseInt(document.getElementById('qtd_base').value) || 0;
             const qtdLanche = parseInt(document.getElementById('qtd_lanche').value) || 0;
             const qtdFamilia = parseInt(document.getElementById('qtd_familia').value) || 0;
-
             const total = (qtdBase * 12.00) + (qtdLanche * 16.90) + (qtdFamilia * 25.00);
-            
-            document.getElementById('valor_total_exibido').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-            return total.toFixed(2).replace('.', ',');
+            const totalFormatado = total.toFixed(2).replace('.', ',');
+            document.getElementById('valor_total_exibido').innerText = `R$ ${totalFormatado}`;
+            return totalFormatado;
+        }
+
+        function verificarTroco() {
+            const pgto = document.getElementById('pagamento').value;
+            const boxTroco = document.getElementById('box_troco');
+            if (pgto === "Dinheiro") {
+                boxTroco.style.display = "block";
+            } else {
+                boxTroco.style.display = "none";
+                document.getElementById('valor_troco').value = "";
+            }
         }
 
         function finalizar() {
@@ -283,16 +345,17 @@
             const casa = document.getElementById('casa_apto').value;
             const complemento = document.getElementById('complemento').value;
             const pgto = document.getElementById('pagamento').value;
+            const troco = document.getElementById('valor_troco').value;
 
             const totalPedido = atualizarTotal();
 
             if (qtdBase == 0 && qtdLanche == 0 && qtdFamilia == 0) {
-                alert("Por favor, selecione a quantidade de pelo menos um item.");
+                alert("Por favor, selecione pelo menos um item.");
                 return;
             }
 
-            if (!nome || !condominio || !casa) {
-                alert("Por favor, preencha nome, condomínio e número da casa/apto!");
+            if (!nome || !condominio || !casa || !pgto) {
+                alert("Por favor, preencha todos os campos e a forma de pagamento!");
                 return;
             }
 
@@ -301,12 +364,17 @@
             mensagem += `🏢 *Condomínio:* ${condominio}\n`;
             mensagem += `🏠 *Nº:* ${casa}\n`;
             if (complemento) mensagem += `📍 *Comp:* ${complemento}\n`;
-            mensagem += `💳 *Pagamento:* ${pgto}\n\n`;
+            
+            let infoPgto = `💳 *Pagamento:* ${pgto}`;
+            if (pgto === "Dinheiro" && troco) {
+                infoPgto += ` (Troco para R$ ${troco})`;
+            }
+            mensagem += infoPgto + `\n\n`;
             
             mensagem += `--- *ITENS DO PEDIDO* ---\n`;
-            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 empadinhas)\n`;
-            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 empadinhas)\n`;
-            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 empadinhas)\n\n`;
+            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 unidades)\n`;
+            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 unidades)\n`;
+            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 unidades)\n\n`;
 
             mensagem += `💰 *VALOR TOTAL: R$ ${totalPedido}*`;
 
