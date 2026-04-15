@@ -168,6 +168,35 @@
             border: 1px solid white;
         }
 
+        .tipo-endereco-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .btn-tipo {
+            flex: 1;
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--text);
+            transition: all 0.3s;
+        }
+
+        .btn-tipo.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .endereco-campos {
+            display: none;
+            animation: fadeIn 0.4s ease-in;
+        }
+
         .checkout-container input, .checkout-container select {
             width: 100%;
             padding: 14px;
@@ -280,9 +309,23 @@
 
         <div class="checkout-container">
             <input type="text" id="nome_cliente" placeholder="Seu Nome completo">
-            <input type="text" id="condominio" placeholder="Nome do Condomínio">
-            <input type="text" id="casa_apto" placeholder="Nº Casa / Apartamento">
-            <input type="text" id="complemento" placeholder="Complemento (Bloco, Torre...)">
+            
+            <div class="tipo-endereco-container">
+                <button class="btn-tipo" id="btn-residencial" onclick="setTipoEndereco('residencial')">Residencial</button>
+                <button class="btn-tipo" id="btn-comercial" onclick="setTipoEndereco('comercial')">Comercial</button>
+            </div>
+
+            <div id="campos-residencial" class="endereco-campos">
+                <input type="text" id="condominio" placeholder="Nome do Condomínio">
+                <input type="text" id="casa_apto" placeholder="Nº Casa / Apartamento">
+                <input type="text" id="complemento_res" placeholder="Bloco, Torre, Andar...">
+            </div>
+
+            <div id="campos-comercial" class="endereco-campos">
+                <input type="text" id="empresa" placeholder="Nome da Empresa / Prédio">
+                <input type="text" id="rua_comercial" placeholder="Rua e Número">
+                <input type="text" id="sala_setor" placeholder="Sala, Andar ou Setor">
+            </div>
             
             <select id="pagamento" onchange="verificarTroco()">
                 <option value="" disabled selected>Forma de Pagamento</option>
@@ -302,6 +345,17 @@
     </div>
 
     <script>
+        let tipoEnderecoAtual = '';
+
+        function setTipoEndereco(tipo) {
+            tipoEnderecoAtual = tipo;
+            document.querySelectorAll('.btn-tipo').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.endereco-campos').forEach(div => div.style.display = 'none');
+            
+            document.getElementById('btn-' + tipo).classList.add('active');
+            document.getElementById('campos-' + tipo).style.display = 'block';
+        }
+
         function changeQty(id, delta) {
             const input = document.getElementById(id);
             const display = document.getElementById('val_' + id);
@@ -339,14 +393,9 @@
             const qtdBase = document.getElementById('qtd_base').value;
             const qtdLanche = document.getElementById('qtd_lanche').value;
             const qtdFamilia = document.getElementById('qtd_familia').value;
-            
             const nome = document.getElementById('nome_cliente').value;
-            const condominio = document.getElementById('condominio').value;
-            const casa = document.getElementById('casa_apto').value;
-            const complemento = document.getElementById('complemento').value;
             const pgto = document.getElementById('pagamento').value;
             const troco = document.getElementById('valor_troco').value;
-
             const totalPedido = atualizarTotal();
 
             if (qtdBase == 0 && qtdLanche == 0 && qtdFamilia == 0) {
@@ -354,16 +403,31 @@
                 return;
             }
 
-            if (!nome || !condominio || !casa || !pgto) {
-                alert("Por favor, preencha todos os campos e a forma de pagamento!");
+            if (!nome || !tipoEnderecoAtual || !pgto) {
+                alert("Por favor, preencha o nome, selecione o tipo de endereço e a forma de pagamento!");
                 return;
             }
 
             let mensagem = `*NOVO PEDIDO - SABOR DE INFÂNCIA*\n\n`;
             mensagem += `👤 *Cliente:* ${nome}\n`;
-            mensagem += `🏢 *Condomínio:* ${condominio}\n`;
-            mensagem += `🏠 *Nº:* ${casa}\n`;
-            if (complemento) mensagem += `📍 *Comp:* ${complemento}\n`;
+            
+            if (tipoEnderecoAtual === 'residencial') {
+                const cond = document.getElementById('condominio').value;
+                const casa = document.getElementById('casa_apto').value;
+                const comp = document.getElementById('complemento_res').value;
+                mensagem += `🏠 *Tipo:* Residencial\n`;
+                mensagem += `🏢 *Condomínio:* ${cond}\n`;
+                mensagem += `🏠 *Nº:* ${casa}\n`;
+                if (comp) mensagem += `📍 *Comp:* ${comp}\n`;
+            } else {
+                const emp = document.getElementById('empresa').value;
+                const rua = document.getElementById('rua_comercial').value;
+                const sala = document.getElementById('sala_setor').value;
+                mensagem += `💼 *Tipo:* Comercial\n`;
+                mensagem += `🏢 *Empresa:* ${emp}\n`;
+                mensagem += `📍 *Endereço:* ${rua}\n`;
+                if (sala) mensagem += `🚪 *Sala/Setor:* ${sala}\n`;
+            }
             
             let infoPgto = `💳 *Pagamento:* ${pgto}`;
             if (pgto === "Dinheiro" && troco) {
@@ -372,14 +436,13 @@
             mensagem += infoPgto + `\n\n`;
             
             mensagem += `--- *ITENS DO PEDIDO* ---\n`;
-            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 unidades)\n`;
-            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 unidades)\n`;
-            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 unidades)\n\n`;
+            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 un)\n`;
+            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 un)\n`;
+            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 un)\n\n`;
 
             mensagem += `💰 *VALOR TOTAL: R$ ${totalPedido}*`;
 
-            const linkWhatsApp = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
-            window.open(linkWhatsApp, '_blank');
+            window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`, '_blank');
         }
     </script>
 </body>
