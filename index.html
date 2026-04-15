@@ -168,6 +168,16 @@
             border: 1px solid white;
         }
 
+        .checkout-container h3 {
+            color: var(--primary);
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
         .tipo-endereco-container {
             display: flex;
             gap: 10px;
@@ -176,7 +186,7 @@
 
         .btn-tipo {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border-radius: 15px;
             border: 1px solid #ddd;
             background: white;
@@ -308,6 +318,8 @@
         </div>
 
         <div class="checkout-container">
+            <h3>Dados para Entrega</h3>
+            
             <input type="text" id="nome_cliente" placeholder="Seu Nome completo">
             
             <div class="tipo-endereco-container">
@@ -388,7 +400,7 @@
         }
 
         function finalizar() {
-            const telefone = "5527981130000"; 
+            const telefone = "5527997202273"; 
             
             const qtdBase = document.getElementById('qtd_base').value;
             const qtdLanche = document.getElementById('qtd_lanche').value;
@@ -426,7 +438,7 @@
                 mensagem += `💼 *Tipo:* Comercial\n`;
                 mensagem += `🏢 *Empresa:* ${emp}\n`;
                 mensagem += `📍 *Endereço:* ${rua}\n`;
-                if (sala) mensagem += `🚪 *Sala/Setor:* ${sala}\n`;
+                if (sala) mensagem += `Door *Sala/Setor:* ${sala}\n`;
             }
             
             let infoPgto = `💳 *Pagamento:* ${pgto}`;
@@ -436,9 +448,9 @@
             mensagem += infoPgto + `\n\n`;
             
             mensagem += `--- *ITENS DO PEDIDO* ---\n`;
-            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 un)\n`;
-            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 un)\n`;
-            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 un)\n\n`;
+            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 unidades)\n`;
+            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 unidades)\n`;
+            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 unidades)\n\n`;
 
             mensagem += `💰 *VALOR TOTAL: R$ ${totalPedido}*`;
 
