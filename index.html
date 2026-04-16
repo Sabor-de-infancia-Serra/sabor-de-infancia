@@ -56,6 +56,7 @@
             margin: 0;
             text-transform: uppercase;
             letter-spacing: 3px;
+            font-weight: bold;
         }
 
         .subtitle {
@@ -162,7 +163,7 @@
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(10px);
             margin: 20px 0;
-            padding: 20px;
+            padding: 25px 20px;
             border-radius: 30px;
             text-align: left;
             border: 1px solid white;
@@ -175,7 +176,8 @@
             margin-top: 0;
             margin-bottom: 20px;
             text-align: center;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
+            font-weight: bold;
         }
 
         .tipo-endereco-container {
@@ -382,7 +384,9 @@
             const qtdBase = parseInt(document.getElementById('qtd_base').value) || 0;
             const qtdLanche = parseInt(document.getElementById('qtd_lanche').value) || 0;
             const qtdFamilia = parseInt(document.getElementById('qtd_familia').value) || 0;
-            const total = (qtdBase * 12.00) + (qtdLanche * 16.90) + (qtdFamilia * 25.00);
+            
+            // ATUALIZADO: 16.00 no cálculo
+            const total = (qtdBase * 12.00) + (qtdLanche * 16.00) + (qtdFamilia * 25.00);
             const totalFormatado = total.toFixed(2).replace('.', ',');
             document.getElementById('valor_total_exibido').innerText = `R$ ${totalFormatado}`;
             return totalFormatado;
@@ -438,7 +442,7 @@
                 mensagem += `💼 *Tipo:* Comercial\n`;
                 mensagem += `🏢 *Empresa:* ${emp}\n`;
                 mensagem += `📍 *Endereço:* ${rua}\n`;
-                if (sala) mensagem += `Door *Sala/Setor:* ${sala}\n`;
+                if (sala) mensagem += `🚪 *Sala/Setor:* ${sala}\n`;
             }
             
             let infoPgto = `💳 *Pagamento:* ${pgto}`;
