@@ -227,6 +227,78 @@
             animation: fadeIn 0.3s ease-in;
         }
 
+        /* ESTILOS DA JANELINHA PIX (MODAL) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #fffaf5;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: modalFade 0.3s ease-out;
+        }
+
+        @keyframes modalFade {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .pix-box {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px dashed var(--primary);
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        #chavePix {
+            font-weight: bold;
+            color: var(--text);
+            font-size: 1rem;
+            word-break: break-all;
+        }
+
+        .btn-copiar {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-prosseguir {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 18px;
+            width: 100%;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 10px 20px rgba(39, 174, 96, 0.2);
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -358,14 +430,29 @@
         <footer>© 2026 Sabor de Infância - Serra, ES</footer>
     </div>
 
+    <div id="modalPix" class="modal-overlay">
+        <div class="modal-content">
+            <h3 style="color: var(--primary); margin-top: 0;">Pagamento via Pix</h3>
+            <p style="color: var(--text); font-size: 0.9rem;">Copie a chave abaixo e envie o comprovante no WhatsApp.</p>
+            <div class="pix-box">
+                <span id="chavePix">SEU_PIX_AQUI</span>
+                <button onclick="copiarPix()" class="btn-copiar">Copiar Chave</button>
+            </div>
+            <p style="font-weight: bold; color: var(--secondary); margin-bottom: 20px;">
+                Total a pagar: <span id="modal_total">R$ 0,00</span>
+            </p>
+            <button onclick="prosseguirWpp()" class="btn-prosseguir">Concluir no WhatsApp</button>
+        </div>
+    </div>
+
     <script>
         let tipoEnderecoAtual = '';
+        let mensagemFinal = '';
 
         function setTipoEndereco(tipo) {
             tipoEnderecoAtual = tipo;
             document.querySelectorAll('.btn-tipo').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.endereco-campos').forEach(div => div.style.display = 'none');
-            
             document.getElementById('btn-' + tipo).classList.add('active');
             document.getElementById('campos-' + tipo).style.display = 'block';
         }
@@ -384,8 +471,6 @@
             const qtdBase = parseInt(document.getElementById('qtd_base').value) || 0;
             const qtdLanche = parseInt(document.getElementById('qtd_lanche').value) || 0;
             const qtdFamilia = parseInt(document.getElementById('qtd_familia').value) || 0;
-            
-            // ATUALIZADO: 16.00 no cálculo
             const total = (qtdBase * 12.00) + (qtdLanche * 16.00) + (qtdFamilia * 25.00);
             const totalFormatado = total.toFixed(2).replace('.', ',');
             document.getElementById('valor_total_exibido').innerText = `R$ ${totalFormatado}`;
@@ -395,17 +480,22 @@
         function verificarTroco() {
             const pgto = document.getElementById('pagamento').value;
             const boxTroco = document.getElementById('box_troco');
-            if (pgto === "Dinheiro") {
-                boxTroco.style.display = "block";
-            } else {
-                boxTroco.style.display = "none";
-                document.getElementById('valor_troco').value = "";
-            }
+            boxTroco.style.display = (pgto === "Dinheiro") ? "block" : "none";
+        }
+
+        function copiarPix() {
+            const chave = document.getElementById('chavePix').innerText;
+            navigator.clipboard.writeText(chave);
+            alert("Chave Pix copiada com sucesso!");
+        }
+
+        function prosseguirWpp() {
+            const telefone = "5527992024698";
+            window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagemFinal)}`, '_blank');
+            document.getElementById('modalPix').style.display = 'none';
         }
 
         function finalizar() {
-            const telefone = "5527992024698"; 
-            
             const qtdBase = document.getElementById('qtd_base').value;
             const qtdLanche = document.getElementById('qtd_lanche').value;
             const qtdFamilia = document.getElementById('qtd_familia').value;
@@ -431,34 +521,32 @@
                 const cond = document.getElementById('condominio').value;
                 const casa = document.getElementById('casa_apto').value;
                 const comp = document.getElementById('complemento_res').value;
-                mensagem += `🏠 *Tipo:* Residencial\n`;
-                mensagem += `🏢 *Condomínio:* ${cond}\n`;
-                mensagem += `🏠 *Nº:* ${casa}\n`;
+                mensagem += `🏠 *Tipo:* Residencial\n🏢 *Endereço:* ${cond}\n🏠 *Nº:* ${casa}\n`;
                 if (comp) mensagem += `📍 *Comp:* ${comp}\n`;
             } else {
                 const emp = document.getElementById('empresa').value;
                 const rua = document.getElementById('rua_comercial').value;
                 const sala = document.getElementById('sala_setor').value;
-                mensagem += `💼 *Tipo:* Comercial\n`;
-                mensagem += `🏢 *Empresa:* ${emp}\n`;
-                mensagem += `📍 *Endereço:* ${rua}\n`;
+                mensagem += `💼 *Tipo:* Comercial\n🏢 *Empresa:* ${emp}\n📍 *Endereço:* ${rua}\n`;
                 if (sala) mensagem += `🚪 *Sala/Setor:* ${sala}\n`;
             }
             
             let infoPgto = `💳 *Pagamento:* ${pgto}`;
-            if (pgto === "Dinheiro" && troco) {
-                infoPgto += ` (Troco para R$ ${troco})`;
-            }
-            mensagem += infoPgto + `\n\n`;
-            
-            mensagem += `--- *ITENS DO PEDIDO* ---\n`;
-            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 unidades)\n`;
-            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 unidades)\n`;
-            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 unidades)\n\n`;
-
+            if (pgto === "Dinheiro" && troco) infoPgto += ` (Troco para R$ ${troco})`;
+            mensagem += infoPgto + `\n\n--- *ITENS DO PEDIDO* ---\n`;
+            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 un)\n`;
+            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 un)\n`;
+            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 un)\n\n`;
             mensagem += `💰 *VALOR TOTAL: R$ ${totalPedido}*`;
 
-            window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`, '_blank');
+            mensagemFinal = mensagem;
+
+            if (pgto === "Pix") {
+                document.getElementById('modal_total').innerText = `R$ ${totalPedido}`;
+                document.getElementById('modalPix').style.display = 'flex';
+            } else {
+                prosseguirWpp();
+            }
         }
     </script>
 </body>
