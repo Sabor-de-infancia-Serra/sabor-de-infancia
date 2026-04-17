@@ -24,17 +24,19 @@
             min-height: 100vh;
         }
 
+        /* Container Principal */
         .app-container {
             background-color: #fffaf5;
             width: 100%;
-            max-width: 500px;
-            padding: 30px 15px;
+            max-width: 500px; /* Largura padrão Mobile */
+            padding: 30px 20px;
             border-radius: 40px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             text-align: center;
             border: 1px solid #d7ccc8;
             box-sizing: border-box;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
 
         header { 
@@ -55,8 +57,8 @@
             color: var(--primary);
             margin: 0;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            font-weight: bold;
+            letter-spacing: 5px;
+            font-weight: 800;
         }
 
         .subtitle {
@@ -66,9 +68,27 @@
             font-size: 0.85rem;
         }
 
+        /* Estrutura de Colunas (Grid/Flex) */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .produtos-col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .checkout-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Card do Produto */
         .produto {
             background: white;
-            margin: 15px auto;
             padding: 15px;
             border-radius: 25px;
             display: flex;
@@ -77,6 +97,7 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.03);
             transition: transform 0.3s;
             border: 1px solid #fdf2e9;
+            margin: 0; /* Removido margin auto para obedecer o gap do pai */
         }
 
         .info-produto {
@@ -92,6 +113,7 @@
             border-radius: 18px;
             object-fit: cover;
             box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            background: #f3e5d8;
         }
 
         .nome-item {
@@ -108,6 +130,7 @@
             font-size: 1rem;
         }
 
+        /* Selecionador de Quantidade */
         .qty-selector {
             display: flex;
             align-items: center;
@@ -141,10 +164,11 @@
             color: var(--text);
         }
 
+        /* Total Box */
         .total-box {
             background: var(--primary-light);
             color: var(--text);
-            margin: 25px 0;
+            margin-bottom: 20px;
             padding: 20px;
             border-radius: 25px;
             display: flex;
@@ -153,30 +177,33 @@
             border: 2px dashed var(--primary);
         }
 
+        .total-box span:first-child { font-weight: bold; text-transform: uppercase; }
+
         #valor_total_exibido {
             color: var(--secondary);
             font-size: 1.5rem;
             font-weight: 800;
         }
 
+        /* Formulário de Entrega */
         .checkout-container {
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(10px);
-            margin: 20px 0;
             padding: 25px 20px;
             border-radius: 30px;
             text-align: left;
             border: 1px solid white;
+            margin-bottom: 20px;
         }
 
         .checkout-container h3 {
             color: var(--primary);
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             text-transform: uppercase;
             margin-top: 0;
             margin-bottom: 20px;
             text-align: center;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             font-weight: bold;
         }
 
@@ -219,6 +246,7 @@
             background: white;
             font-size: 14px;
             outline: none;
+            color: var(--text);
         }
 
         #box_troco {
@@ -227,11 +255,7 @@
             animation: fadeIn 0.3s ease-in;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        /* Botão Finalizar */
         button.btn-finalizar {
             background: linear-gradient(135deg, var(--secondary), #2ecc71);
             color: white;
@@ -252,7 +276,110 @@
             border-bottom: 0;
         }
 
+        /* JANELINHA PIX (MODAL) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #fffaf5;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: modalFade 0.3s ease-out;
+        }
+
+        @keyframes modalFade {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .pix-box {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            border: 2px dashed var(--primary);
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        #chavePix {
+            font-weight: bold;
+            color: var(--text);
+            font-size: 1rem;
+            word-break: break-all;
+        }
+
+        .btn-copiar {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .btn-prosseguir {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 18px;
+            width: 100%;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 10px 20px rgba(39, 174, 96, 0.2);
+        }
+
         footer { margin-top: 30px; font-size: 0.75rem; color: #bcaaa4; }
+
+        /* =========================================
+           MEDIA QUERY: VERSÃO DESKTOP (LARGURA > 900px)
+           ========================================= */
+        @media (min-width: 900px) {
+            body {
+                padding: 40px 20px;
+            }
+            .app-container {
+                max-width: 950px; /* Estica o container principal */
+                padding: 40px 50px;
+            }
+            
+            .main-content {
+                flex-direction: row; /* Coloca lado a lado */
+                align-items: flex-start;
+                gap: 40px;
+            }
+
+            .produtos-col {
+                flex: 1; /* Ocupa metade da tela */
+            }
+
+            .checkout-col {
+                flex: 1; /* Ocupa a outra metade */
+            }
+            
+            header {
+                margin-bottom: 40px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -266,106 +393,128 @@
             <p class="subtitle">Doces Recordações em cada Mordida</p>
         </header>
 
-        <div class="produto">
-            <div class="info-produto">
-               <img src="kit_4_empadas.png" class="foto-empada">
-               <div>
-                   <span class="nome-item">Kit Base (4 unidades)</span>
-                   <span class="preco-item">R$ 12,00</span>
-               </div>
-            </div>
-            <div class="qty-selector">
-                <button class="btn-qty" onclick="changeQty('qtd_base', -1)">-</button>
-                <span class="qty-value" id="val_qtd_base">0</span>
-                <button class="btn-qty" onclick="changeQty('qtd_base', 1)">+</button>
-            </div>
-            <input type="hidden" id="qtd_base" value="0">
-        </div>
+        <div class="main-content">
+            
+            <div class="produtos-col">
+                <div class="produto">
+                    <div class="info-produto">
+                       <img src="kit_4_empadas.png" class="foto-empada" alt="Kit 4">
+                       <div>
+                           <span class="nome-item">Kit Base (4 unidades)</span>
+                           <span class="preco-item">R$ 12,00</span>
+                       </div>
+                    </div>
+                    <div class="qty-selector">
+                        <button class="btn-qty" onclick="changeQty('qtd_base', -1)">-</button>
+                        <span class="qty-value" id="val_qtd_base">0</span>
+                        <button class="btn-qty" onclick="changeQty('qtd_base', 1)">+</button>
+                    </div>
+                    <input type="hidden" id="qtd_base" value="0">
+                </div>
 
-        <div class="produto">
-            <div class="info-produto">
-                <img src="kit_6_empadas.png" class="foto-empada">
-                <div>
-                    <span class="nome-item">Kit Lanche (6 unidades)</span>
-                    <span class="preco-item">R$ 16,00</span>
+                <div class="produto">
+                    <div class="info-produto">
+                        <img src="kit_6_empadas.png" class="foto-empada" alt="Kit 6">
+                        <div>
+                            <span class="nome-item">Kit Lanche (6 unidades)</span>
+                            <span class="preco-item">R$ 16,00</span>
+                        </div>
+                    </div>
+                    <div class="qty-selector">
+                        <button class="btn-qty" onclick="changeQty('qtd_lanche', -1)">-</button>
+                        <span class="qty-value" id="val_qtd_lanche">0</span>
+                        <button class="btn-qty" onclick="changeQty('qtd_lanche', 1)">+</button>
+                    </div>
+                    <input type="hidden" id="qtd_lanche" value="0">
+                </div>
+
+                <div class="produto">
+                    <div class="info-produto">
+                        <img src="kit_10_empadas.png" class="foto-empada" alt="Kit 10">
+                        <div>
+                            <span class="nome-item">Kit Família (10 unidades)</span>
+                            <span class="preco-item">R$ 25,00</span>
+                        </div>
+                    </div>
+                    <div class="qty-selector">
+                        <button class="btn-qty" onclick="changeQty('qtd_familia', -1)">-</button>
+                        <span class="qty-value" id="val_qtd_familia">0</span>
+                        <button class="btn-qty" onclick="changeQty('qtd_familia', 1)">+</button>
+                    </div>
+                    <input type="hidden" id="qtd_familia" value="0">
                 </div>
             </div>
-            <div class="qty-selector">
-                <button class="btn-qty" onclick="changeQty('qtd_lanche', -1)">-</button>
-                <span class="qty-value" id="val_qtd_lanche">0</span>
-                <button class="btn-qty" onclick="changeQty('qtd_lanche', 1)">+</button>
-            </div>
-            <input type="hidden" id="qtd_lanche" value="0">
-        </div>
 
-        <div class="produto">
-            <div class="info-produto">
-                <img src="kit_10_empadas.png" class="foto-empada">
-                <div>
-                    <span class="nome-item">Kit Família (10 unidades)</span>
-                    <span class="preco-item">R$ 25,00</span>
+            <div class="checkout-col">
+                <div class="total-box">
+                    <span>TOTAL DO PEDIDO</span>
+                    <span id="valor_total_exibido">R$ 0,00</span>
                 </div>
-            </div>
-            <div class="qty-selector">
-                <button class="btn-qty" onclick="changeQty('qtd_familia', -1)">-</button>
-                <span class="qty-value" id="val_qtd_familia">0</span>
-                <button class="btn-qty" onclick="changeQty('qtd_familia', 1)">+</button>
-            </div>
-            <input type="hidden" id="qtd_familia" value="0">
-        </div>
 
-        <div class="total-box">
-            <span>TOTAL DO PEDIDO</span>
-            <span id="valor_total_exibido">R$ 0,00</span>
-        </div>
+                <div class="checkout-container">
+                    <h3>Dados para Entrega</h3>
+                    
+                    <input type="text" id="nome_cliente" placeholder="Seu Nome completo">
+                    
+                    <div class="tipo-endereco-container">
+                        <button class="btn-tipo" id="btn-residencial" onclick="setTipoEndereco('residencial')">Residencial</button>
+                        <button class="btn-tipo" id="btn-comercial" onclick="setTipoEndereco('comercial')">Comercial</button>
+                    </div>
 
-        <div class="checkout-container">
-            <h3>Dados para Entrega</h3>
-            
-            <input type="text" id="nome_cliente" placeholder="Seu Nome completo">
-            
-            <div class="tipo-endereco-container">
-                <button class="btn-tipo" id="btn-residencial" onclick="setTipoEndereco('residencial')">Residencial</button>
-                <button class="btn-tipo" id="btn-comercial" onclick="setTipoEndereco('comercial')">Comercial</button>
-            </div>
+                    <div id="campos-residencial" class="endereco-campos">
+                        <input type="text" id="condominio" placeholder="Rua / Nome do Condomínio">
+                        <input type="text" id="casa_apto" placeholder="Nº Casa / Apartamento">
+                        <input type="text" id="complemento_res" placeholder="Bloco, Torre, Andar...">
+                    </div>
 
-            <div id="campos-residencial" class="endereco-campos">
-                <input type="text" id="condominio" placeholder="Rua / Nome do Condomínio">
-                <input type="text" id="casa_apto" placeholder="Nº Casa / Apartamento">
-                <input type="text" id="complemento_res" placeholder="Bloco, Torre, Andar...">
-            </div>
+                    <div id="campos-comercial" class="endereco-campos">
+                        <input type="text" id="empresa" placeholder="Nome da Empresa / Prédio">
+                        <input type="text" id="rua_comercial" placeholder="Rua e Número">
+                        <input type="text" id="sala_setor" placeholder="Sala, Andar ou Setor">
+                    </div>
+                    
+                    <select id="pagamento" onchange="verificarTroco()">
+                        <option value="" disabled selected>Forma de Pagamento</option>
+                        <option value="Pix">Pix</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="PicPay">PicPay</option>
+                    </select>
 
-            <div id="campos-comercial" class="endereco-campos">
-                <input type="text" id="empresa" placeholder="Nome da Empresa / Prédio">
-                <input type="text" id="rua_comercial" placeholder="Rua e Número">
-                <input type="text" id="sala_setor" placeholder="Sala, Andar ou Setor">
-            </div>
-            
-            <select id="pagamento" onchange="verificarTroco()">
-                <option value="" disabled selected>Forma de Pagamento</option>
-                <option value="Pix">Pix</option>
-                <option value="Dinheiro">Dinheiro</option>
-                <option value="PicPay">PicPay</option>
-            </select>
+                    <div id="box_troco">
+                        <input type="text" id="valor_troco" placeholder="Troco para quanto? (Ex: 50)">
+                    </div>
+                </div>
 
-            <div id="box_troco">
-                <input type="text" id="valor_troco" placeholder="Troco para quanto?">
+                <button class="btn-finalizar" onclick="finalizar()">ENVIAR PEDIDO</button>
             </div>
         </div>
-
-        <button class="btn-finalizar" onclick="finalizar()">ENVIAR PEDIDO PELO WHATSAPP</button>
 
         <footer>© 2026 Sabor de Infância - Serra, ES</footer>
     </div>
 
+    <div id="modalPix" class="modal-overlay">
+        <div class="modal-content">
+            <h3 style="color: var(--primary); margin-top: 0;">Pagamento via Pix</h3>
+            <p style="color: var(--text); font-size: 0.9rem;">Copie a chave abaixo e envie o comprovante no WhatsApp.</p>
+            <div class="pix-box">
+                <span id="chavePix">SEU_PIX_AQUI</span>
+                <button onclick="copiarPix()" class="btn-copiar">Copiar Chave</button>
+            </div>
+            <p style="font-weight: bold; color: var(--secondary); margin-bottom: 20px;">
+                Total a pagar: <span id="modal_total">R$ 0,00</span>
+            </p>
+            <button onclick="prosseguirWpp()" class="btn-prosseguir">Concluir no WhatsApp</button>
+        </div>
+    </div>
+
     <script>
         let tipoEnderecoAtual = '';
+        let mensagemFinal = '';
 
         function setTipoEndereco(tipo) {
             tipoEnderecoAtual = tipo;
             document.querySelectorAll('.btn-tipo').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.endereco-campos').forEach(div => div.style.display = 'none');
-            
             document.getElementById('btn-' + tipo).classList.add('active');
             document.getElementById('campos-' + tipo).style.display = 'block';
         }
@@ -384,8 +533,6 @@
             const qtdBase = parseInt(document.getElementById('qtd_base').value) || 0;
             const qtdLanche = parseInt(document.getElementById('qtd_lanche').value) || 0;
             const qtdFamilia = parseInt(document.getElementById('qtd_familia').value) || 0;
-            
-            // ATUALIZADO: 16.00 no cálculo
             const total = (qtdBase * 12.00) + (qtdLanche * 16.00) + (qtdFamilia * 25.00);
             const totalFormatado = total.toFixed(2).replace('.', ',');
             document.getElementById('valor_total_exibido').innerText = `R$ ${totalFormatado}`;
@@ -395,17 +542,22 @@
         function verificarTroco() {
             const pgto = document.getElementById('pagamento').value;
             const boxTroco = document.getElementById('box_troco');
-            if (pgto === "Dinheiro") {
-                boxTroco.style.display = "block";
-            } else {
-                boxTroco.style.display = "none";
-                document.getElementById('valor_troco').value = "";
-            }
+            boxTroco.style.display = (pgto === "Dinheiro") ? "block" : "none";
+        }
+
+        function copiarPix() {
+            const chave = document.getElementById('chavePix').innerText;
+            navigator.clipboard.writeText(chave);
+            alert("Chave Pix copiada com sucesso!");
+        }
+
+        function prosseguirWpp() {
+            const telefone = "5527992024698";
+            window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagemFinal)}`, '_blank');
+            document.getElementById('modalPix').style.display = 'none';
         }
 
         function finalizar() {
-            const telefone = "5527992024698"; 
-            
             const qtdBase = document.getElementById('qtd_base').value;
             const qtdLanche = document.getElementById('qtd_lanche').value;
             const qtdFamilia = document.getElementById('qtd_familia').value;
@@ -431,34 +583,32 @@
                 const cond = document.getElementById('condominio').value;
                 const casa = document.getElementById('casa_apto').value;
                 const comp = document.getElementById('complemento_res').value;
-                mensagem += `🏠 *Tipo:* Residencial\n`;
-                mensagem += `🏢 *Condomínio:* ${cond}\n`;
-                mensagem += `🏠 *Nº:* ${casa}\n`;
+                mensagem += `🏠 *Tipo:* Residencial\n🏢 *Endereço:* ${cond}\n🏠 *Nº:* ${casa}\n`;
                 if (comp) mensagem += `📍 *Comp:* ${comp}\n`;
             } else {
                 const emp = document.getElementById('empresa').value;
                 const rua = document.getElementById('rua_comercial').value;
                 const sala = document.getElementById('sala_setor').value;
-                mensagem += `💼 *Tipo:* Comercial\n`;
-                mensagem += `🏢 *Empresa:* ${emp}\n`;
-                mensagem += `📍 *Endereço:* ${rua}\n`;
+                mensagem += `💼 *Tipo:* Comercial\n🏢 *Empresa:* ${emp}\n📍 *Endereço:* ${rua}\n`;
                 if (sala) mensagem += `🚪 *Sala/Setor:* ${sala}\n`;
             }
             
             let infoPgto = `💳 *Pagamento:* ${pgto}`;
-            if (pgto === "Dinheiro" && troco) {
-                infoPgto += ` (Troco para R$ ${troco})`;
-            }
-            mensagem += infoPgto + `\n\n`;
-            
-            mensagem += `--- *ITENS DO PEDIDO* ---\n`;
-            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 unidades)\n`;
-            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 unidades)\n`;
-            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 unidades)\n\n`;
-
+            if (pgto === "Dinheiro" && troco) infoPgto += ` (Troco para R$ ${troco})`;
+            mensagem += infoPgto + `\n\n--- *ITENS DO PEDIDO* ---\n`;
+            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 un)\n`;
+            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 un)\n`;
+            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 un)\n\n`;
             mensagem += `💰 *VALOR TOTAL: R$ ${totalPedido}*`;
 
-            window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`, '_blank');
+            mensagemFinal = mensagem;
+
+            if (pgto === "Pix") {
+                document.getElementById('modal_total').innerText = `R$ ${totalPedido}`;
+                document.getElementById('modalPix').style.display = 'flex';
+            } else {
+                prosseguirWpp();
+            }
         }
     </script>
 </body>
