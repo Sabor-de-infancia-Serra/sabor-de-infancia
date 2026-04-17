@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sabor de Infância - Delivery</title>
+    <meta name="description" content="Delivery de empadas artesanais Sabor de Infância em Serra, ES. Doces recordações em cada mordida.">
     <style>
         :root {
             --primary: #d35400;
@@ -11,21 +12,29 @@
             --secondary: #27ae60;
             --text: #4e342e;
             --bg: #eaddcf;
+            --card: #fffaf5;
         }
+
+        * { box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg); 
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(211, 84, 0, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(39, 174, 96, 0.05) 0%, transparent 40%);
             display: flex;
             justify-content: center;
             align-items: flex-start;
             padding: 20px 10px;
             margin: 0;
             min-height: 100vh;
+            color: var(--text);
         }
 
+        /* ===== MOBILE (default) — IDÊNTICO AO ORIGINAL ===== */
         .app-container {
-            background-color: #fffaf5;
+            background-color: var(--card);
             width: 100%;
             max-width: 500px;
             padding: 30px 15px;
@@ -33,12 +42,11 @@
             box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             text-align: center;
             border: 1px solid #d7ccc8;
-            box-sizing: border-box;
             overflow: hidden;
         }
 
-        header { 
-            margin-bottom: 30px; 
+        header {
+            margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 2px dashed #d7ccc8;
         }
@@ -77,7 +85,10 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.03);
             transition: transform 0.3s;
             border: 1px solid #fdf2e9;
+            gap: 10px;
         }
+
+        .produto:hover { transform: translateY(-2px); }
 
         .info-produto {
             display: flex;
@@ -92,6 +103,7 @@
             border-radius: 18px;
             object-fit: cover;
             box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            background: #fdf2e9;
         }
 
         .nome-item {
@@ -139,6 +151,7 @@
             font-weight: bold;
             min-width: 20px;
             color: var(--text);
+            text-align: center;
         }
 
         .total-box {
@@ -151,6 +164,8 @@
             justify-content: space-between;
             align-items: center;
             border: 2px dashed var(--primary);
+            font-weight: 700;
+            letter-spacing: 1px;
         }
 
         #valor_total_exibido {
@@ -183,7 +198,7 @@
         .tipo-endereco-container {
             display: flex;
             gap: 10px;
-            margin-bottom: 15px;
+            margin: 10px 0 15px;
         }
 
         .btn-tipo {
@@ -204,28 +219,32 @@
             border-color: var(--primary);
         }
 
-        .endereco-campos {
-            display: none;
-            animation: fadeIn 0.4s ease-in;
-        }
+        .endereco-campos { display: none; animation: fadeIn 0.4s ease-in; }
+        .endereco-campos.show { display: block; }
 
-        .checkout-container input, .checkout-container select {
+        .checkout-container input,
+        .checkout-container select,
+        .checkout-container textarea {
             width: 100%;
             padding: 14px;
             margin: 8px 0;
             border: 1px solid #ddd;
             border-radius: 15px;
-            box-sizing: border-box;
             background: white;
             font-size: 14px;
             outline: none;
+            font-family: inherit;
         }
 
-        #box_troco {
-            display: none;
-            margin-top: 5px;
-            animation: fadeIn 0.3s ease-in;
+        .checkout-container input:focus,
+        .checkout-container select:focus,
+        .checkout-container textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(211, 84, 0, 0.1);
         }
+
+        #box_troco { display: none; margin-top: 5px; animation: fadeIn 0.3s ease-in; }
+        #box_troco.show { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
@@ -243,222 +262,280 @@
             cursor: pointer;
             width: 100%;
             box-shadow: 0 10px 20px rgba(39, 174, 96, 0.2);
-            transition: all 0.3s;
+            transition: all 0.2s;
             border-bottom: 4px solid #1e8449;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        button.btn-finalizar:active {
-            transform: translateY(4px);
-            border-bottom: 0;
+        button.btn-finalizar:hover { filter: brightness(1.05); }
+        button.btn-finalizar:active { transform: translateY(4px); border-bottom: 0; }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.75rem;
+            color: #bcaaa4;
         }
 
-        footer { margin-top: 30px; font-size: 0.75rem; color: #bcaaa4; }
+        /* ===== TABLET (≥768px) ===== */
+        @media (min-width: 768px) {
+            body { padding: 40px 20px; }
+            .app-container { max-width: 640px; padding: 40px 30px; }
+            .foto-empada { width: 80px; height: 80px; }
+            .nome-item { font-size: 1.05rem; }
+            h1 { font-size: 1.8rem; }
+        }
+
+        /* ===== DESKTOP (≥1024px) — LAYOUT 2 COLUNAS ===== */
+        @media (min-width: 1024px) {
+            body { padding: 50px 30px; align-items: center; }
+
+            .app-container {
+                max-width: 1100px;
+                padding: 50px 50px;
+                border-radius: 50px;
+                text-align: left;
+            }
+
+            header { text-align: center; margin-bottom: 40px; }
+            .logo-placeholder img { width: 170px; }
+            h1 { font-size: 2.2rem; letter-spacing: 5px; }
+            .subtitle { font-size: 1rem; }
+
+            /* Layout grid de 2 colunas */
+            .main-grid {
+                display: grid;
+                grid-template-columns: 1.3fr 1fr;
+                gap: 40px;
+                align-items: start;
+            }
+
+            .coluna-cardapio h2,
+            .coluna-pedido h2 {
+                color: var(--primary);
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                font-size: 1.1rem;
+                margin: 0 0 15px;
+                font-weight: bold;
+            }
+
+            /* Cards de produto maiores no desktop */
+            .produto {
+                padding: 20px;
+                margin: 12px 0;
+                border-radius: 28px;
+            }
+            .foto-empada { width: 95px; height: 95px; border-radius: 22px; }
+            .nome-item { font-size: 1.15rem; margin-bottom: 6px; }
+            .preco-item { font-size: 1.15rem; }
+            .info-produto { gap: 18px; }
+
+            /* Coluna direita sticky */
+            .coluna-pedido {
+                position: sticky;
+                top: 30px;
+            }
+
+            .total-box { margin: 0 0 20px; padding: 22px 25px; }
+            #valor_total_exibido { font-size: 1.7rem; }
+
+            .checkout-container { margin: 0 0 20px; padding: 28px; }
+            .checkout-container h3 { font-size: 1.3rem; margin-bottom: 18px; }
+
+            footer { text-align: center; margin-top: 40px; }
+        }
+
+        /* ===== DESKTOP GRANDE (≥1280px) ===== */
+        @media (min-width: 1280px) {
+            .app-container { max-width: 1200px; padding: 60px; }
+            .main-grid { gap: 50px; }
+        }
     </style>
 </head>
 <body>
-
     <div class="app-container">
         <header>
             <div class="logo-placeholder">
-                <img src="logo_nova.png" alt="Logo Sabor de Infância">
+                <!-- TROQUE PELA URL DA SUA LOGO -->
+                <img src="https://via.placeholder.com/140x140/fff3e0/d35400?text=LOGO" alt="Sabor de Infância">
             </div>
             <h1>Delivery</h1>
             <p class="subtitle">Doces Recordações em cada Mordida</p>
         </header>
 
-        <div class="produto">
-            <div class="info-produto">
-               <img src="kit_4_empadas.png" class="foto-empada">
-               <div>
-                   <span class="nome-item">Kit Base (4 unidades)</span>
-                   <span class="preco-item">R$ 12,00</span>
-               </div>
-            </div>
-            <div class="qty-selector">
-                <button class="btn-qty" onclick="changeQty('qtd_base', -1)">-</button>
-                <span class="qty-value" id="val_qtd_base">0</span>
-                <button class="btn-qty" onclick="changeQty('qtd_base', 1)">+</button>
-            </div>
-            <input type="hidden" id="qtd_base" value="0">
-        </div>
+        <div class="main-grid">
+            <!-- ===== COLUNA ESQUERDA: CARDÁPIO ===== -->
+            <section class="coluna-cardapio">
+                <h2 class="hidden-mobile" style="display:none;">Cardápio</h2>
 
-        <div class="produto">
-            <div class="info-produto">
-                <img src="kit_6_empadas.png" class="foto-empada">
-                <div>
-                    <span class="nome-item">Kit Lanche (6 unidades)</span>
-                    <span class="preco-item">R$ 16,00</span>
+                <div class="produto" data-preco="12.00" data-nome="Kit Base (4 unidades)">
+                    <div class="info-produto">
+                        <img class="foto-empada" src="https://via.placeholder.com/95/fdf2e9/d35400?text=Kit" alt="Kit Base">
+                        <div>
+                            <span class="nome-item">Kit Base (4 unidades)</span>
+                            <span class="preco-item">R$ 12,00</span>
+                        </div>
+                    </div>
+                    <div class="qty-selector">
+                        <button class="btn-qty" onclick="alterarQtd(this, -1)">−</button>
+                        <span class="qty-value">0</span>
+                        <button class="btn-qty" onclick="alterarQtd(this, 1)">+</button>
+                    </div>
                 </div>
-            </div>
-            <div class="qty-selector">
-                <button class="btn-qty" onclick="changeQty('qtd_lanche', -1)">-</button>
-                <span class="qty-value" id="val_qtd_lanche">0</span>
-                <button class="btn-qty" onclick="changeQty('qtd_lanche', 1)">+</button>
-            </div>
-            <input type="hidden" id="qtd_lanche" value="0">
-        </div>
 
-        <div class="produto">
-            <div class="info-produto">
-                <img src="kit_10_empadas.png" class="foto-empada">
-                <div>
-                    <span class="nome-item">Kit Família (10 unidades)</span>
-                    <span class="preco-item">R$ 25,00</span>
+                <div class="produto" data-preco="16.00" data-nome="Kit Lanche (6 unidades)">
+                    <div class="info-produto">
+                        <img class="foto-empada" src="https://via.placeholder.com/95/fdf2e9/d35400?text=Kit" alt="Kit Lanche">
+                        <div>
+                            <span class="nome-item">Kit Lanche (6 unidades)</span>
+                            <span class="preco-item">R$ 16,00</span>
+                        </div>
+                    </div>
+                    <div class="qty-selector">
+                        <button class="btn-qty" onclick="alterarQtd(this, -1)">−</button>
+                        <span class="qty-value">0</span>
+                        <button class="btn-qty" onclick="alterarQtd(this, 1)">+</button>
+                    </div>
                 </div>
-            </div>
-            <div class="qty-selector">
-                <button class="btn-qty" onclick="changeQty('qtd_familia', -1)">-</button>
-                <span class="qty-value" id="val_qtd_familia">0</span>
-                <button class="btn-qty" onclick="changeQty('qtd_familia', 1)">+</button>
-            </div>
-            <input type="hidden" id="qtd_familia" value="0">
+
+                <div class="produto" data-preco="25.00" data-nome="Kit Família (10 unidades)">
+                    <div class="info-produto">
+                        <img class="foto-empada" src="https://via.placeholder.com/95/fdf2e9/d35400?text=Kit" alt="Kit Família">
+                        <div>
+                            <span class="nome-item">Kit Família (10 unidades)</span>
+                            <span class="preco-item">R$ 25,00</span>
+                        </div>
+                    </div>
+                    <div class="qty-selector">
+                        <button class="btn-qty" onclick="alterarQtd(this, -1)">−</button>
+                        <span class="qty-value">0</span>
+                        <button class="btn-qty" onclick="alterarQtd(this, 1)">+</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== COLUNA DIREITA: PEDIDO + ENTREGA ===== -->
+            <aside class="coluna-pedido">
+                <div class="total-box">
+                    <span>TOTAL DO PEDIDO</span>
+                    <span id="valor_total_exibido">R$ 0,00</span>
+                </div>
+
+                <div class="checkout-container">
+                    <h3>Dados para Entrega</h3>
+
+                    <input type="text" id="nome" placeholder="Seu Nome completo" required>
+                    <input type="tel" id="telefone" placeholder="Telefone / WhatsApp" required>
+
+                    <div class="tipo-endereco-container">
+                        <button type="button" class="btn-tipo active" data-tipo="residencial" onclick="selecionarTipo(this)">Residencial</button>
+                        <button type="button" class="btn-tipo" data-tipo="comercial" onclick="selecionarTipo(this)">Comercial</button>
+                    </div>
+
+                    <input type="text" id="endereco" placeholder="Endereço (Rua, número, bairro)" required>
+                    <input type="text" id="referencia" placeholder="Ponto de referência (opcional)">
+
+                    <select id="pagamento" onchange="verificarTroco()">
+                        <option value="">Forma de Pagamento</option>
+                        <option value="Pix">Pix</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                        <option value="PicPay">PicPay</option>
+                        <option value="Cartão na entrega">Cartão na entrega</option>
+                    </select>
+
+                    <div id="box_troco">
+                        <input type="text" id="troco" placeholder="Troco para quanto? (R$)">
+                    </div>
+                </div>
+
+                <button class="btn-finalizar" onclick="enviarPedido()">Enviar Pedido pelo WhatsApp</button>
+            </aside>
         </div>
-
-        <div class="total-box">
-            <span>TOTAL DO PEDIDO</span>
-            <span id="valor_total_exibido">R$ 0,00</span>
-        </div>
-
-        <div class="checkout-container">
-            <h3>Dados para Entrega</h3>
-            
-            <input type="text" id="nome_cliente" placeholder="Seu Nome completo">
-            
-            <div class="tipo-endereco-container">
-                <button class="btn-tipo" id="btn-residencial" onclick="setTipoEndereco('residencial')">Residencial</button>
-                <button class="btn-tipo" id="btn-comercial" onclick="setTipoEndereco('comercial')">Comercial</button>
-            </div>
-
-            <div id="campos-residencial" class="endereco-campos">
-                <input type="text" id="condominio" placeholder="Rua / Nome do Condomínio">
-                <input type="text" id="casa_apto" placeholder="Nº Casa / Apartamento">
-                <input type="text" id="complemento_res" placeholder="Bloco, Torre, Andar...">
-            </div>
-
-            <div id="campos-comercial" class="endereco-campos">
-                <input type="text" id="empresa" placeholder="Nome da Empresa / Prédio">
-                <input type="text" id="rua_comercial" placeholder="Rua e Número">
-                <input type="text" id="sala_setor" placeholder="Sala, Andar ou Setor">
-            </div>
-            
-            <select id="pagamento" onchange="verificarTroco()">
-                <option value="" disabled selected>Forma de Pagamento</option>
-                <option value="Pix">Pix</option>
-                <option value="Dinheiro">Dinheiro</option>
-                <option value="PicPay">PicPay</option>
-            </select>
-
-            <div id="box_troco">
-                <input type="text" id="valor_troco" placeholder="Troco para quanto?">
-            </div>
-        </div>
-
-        <button class="btn-finalizar" onclick="finalizar()">ENVIAR PEDIDO PELO WHATSAPP</button>
 
         <footer>© 2026 Sabor de Infância - Serra, ES</footer>
     </div>
 
     <script>
-        let tipoEnderecoAtual = '';
+        // ⚠️ TROQUE PELO SEU NÚMERO DE WHATSAPP (formato: 55 + DDD + número, só dígitos)
+        const WHATSAPP = '5527999999999';
 
-        function setTipoEndereco(tipo) {
-            tipoEnderecoAtual = tipo;
-            document.querySelectorAll('.btn-tipo').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.endereco-campos').forEach(div => div.style.display = 'none');
-            
-            document.getElementById('btn-' + tipo).classList.add('active');
-            document.getElementById('campos-' + tipo).style.display = 'block';
-        }
-
-        function changeQty(id, delta) {
-            const input = document.getElementById(id);
-            const display = document.getElementById('val_' + id);
-            let newVal = parseInt(input.value) + delta;
-            if (newVal < 0) newVal = 0;
-            input.value = newVal;
-            display.innerText = newVal;
+        function alterarQtd(btn, delta) {
+            const selector = btn.parentElement;
+            const span = selector.querySelector('.qty-value');
+            let qtd = parseInt(span.textContent) + delta;
+            if (qtd < 0) qtd = 0;
+            span.textContent = qtd;
             atualizarTotal();
         }
 
         function atualizarTotal() {
-            const qtdBase = parseInt(document.getElementById('qtd_base').value) || 0;
-            const qtdLanche = parseInt(document.getElementById('qtd_lanche').value) || 0;
-            const qtdFamilia = parseInt(document.getElementById('qtd_familia').value) || 0;
-            
-            // ATUALIZADO: 16.00 no cálculo
-            const total = (qtdBase * 12.00) + (qtdLanche * 16.00) + (qtdFamilia * 25.00);
-            const totalFormatado = total.toFixed(2).replace('.', ',');
-            document.getElementById('valor_total_exibido').innerText = `R$ ${totalFormatado}`;
-            return totalFormatado;
+            let total = 0;
+            document.querySelectorAll('.produto').forEach(p => {
+                const preco = parseFloat(p.dataset.preco);
+                const qtd = parseInt(p.querySelector('.qty-value').textContent);
+                total += preco * qtd;
+            });
+            document.getElementById('valor_total_exibido').textContent =
+                'R$ ' + total.toFixed(2).replace('.', ',');
+        }
+
+        function selecionarTipo(btn) {
+            document.querySelectorAll('.btn-tipo').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
         }
 
         function verificarTroco() {
-            const pgto = document.getElementById('pagamento').value;
-            const boxTroco = document.getElementById('box_troco');
-            if (pgto === "Dinheiro") {
-                boxTroco.style.display = "block";
-            } else {
-                boxTroco.style.display = "none";
-                document.getElementById('valor_troco').value = "";
-            }
+            const pag = document.getElementById('pagamento').value;
+            const box = document.getElementById('box_troco');
+            if (pag === 'Dinheiro') box.classList.add('show');
+            else box.classList.remove('show');
         }
 
-        function finalizar() {
-            const telefone = "5527992024698"; 
-            
-            const qtdBase = document.getElementById('qtd_base').value;
-            const qtdLanche = document.getElementById('qtd_lanche').value;
-            const qtdFamilia = document.getElementById('qtd_familia').value;
-            const nome = document.getElementById('nome_cliente').value;
-            const pgto = document.getElementById('pagamento').value;
-            const troco = document.getElementById('valor_troco').value;
-            const totalPedido = atualizarTotal();
+        function enviarPedido() {
+            const itens = [];
+            let total = 0;
+            document.querySelectorAll('.produto').forEach(p => {
+                const qtd = parseInt(p.querySelector('.qty-value').textContent);
+                if (qtd > 0) {
+                    const preco = parseFloat(p.dataset.preco);
+                    const nome = p.dataset.nome;
+                    itens.push(`• ${qtd}x ${nome} — R$ ${(preco * qtd).toFixed(2).replace('.', ',')}`);
+                    total += preco * qtd;
+                }
+            });
 
-            if (qtdBase == 0 && qtdLanche == 0 && qtdFamilia == 0) {
-                alert("Por favor, selecione pelo menos um item.");
+            if (itens.length === 0) {
+                alert('Adicione pelo menos 1 item ao pedido!');
                 return;
             }
 
-            if (!nome || !tipoEnderecoAtual || !pgto) {
-                alert("Por favor, preencha o nome, selecione o tipo de endereço e a forma de pagamento!");
+            const nome = document.getElementById('nome').value.trim();
+            const telefone = document.getElementById('telefone').value.trim();
+            const endereco = document.getElementById('endereco').value.trim();
+            const referencia = document.getElementById('referencia').value.trim();
+            const pagamento = document.getElementById('pagamento').value;
+            const troco = document.getElementById('troco').value.trim();
+            const tipo = document.querySelector('.btn-tipo.active').dataset.tipo;
+
+            if (!nome || !telefone || !endereco || !pagamento) {
+                alert('Preencha nome, telefone, endereço e forma de pagamento!');
                 return;
             }
 
-            let mensagem = `*NOVO PEDIDO - SABOR DE INFÂNCIA*\n\n`;
-            mensagem += `👤 *Cliente:* ${nome}\n`;
-            
-            if (tipoEnderecoAtual === 'residencial') {
-                const cond = document.getElementById('condominio').value;
-                const casa = document.getElementById('casa_apto').value;
-                const comp = document.getElementById('complemento_res').value;
-                mensagem += `🏠 *Tipo:* Residencial\n`;
-                mensagem += `🏢 *Condomínio:* ${cond}\n`;
-                mensagem += `🏠 *Nº:* ${casa}\n`;
-                if (comp) mensagem += `📍 *Comp:* ${comp}\n`;
-            } else {
-                const emp = document.getElementById('empresa').value;
-                const rua = document.getElementById('rua_comercial').value;
-                const sala = document.getElementById('sala_setor').value;
-                mensagem += `💼 *Tipo:* Comercial\n`;
-                mensagem += `🏢 *Empresa:* ${emp}\n`;
-                mensagem += `📍 *Endereço:* ${rua}\n`;
-                if (sala) mensagem += `🚪 *Sala/Setor:* ${sala}\n`;
-            }
-            
-            let infoPgto = `💳 *Pagamento:* ${pgto}`;
-            if (pgto === "Dinheiro" && troco) {
-                infoPgto += ` (Troco para R$ ${troco})`;
-            }
-            mensagem += infoPgto + `\n\n`;
-            
-            mensagem += `--- *ITENS DO PEDIDO* ---\n`;
-            if (qtdBase > 0) mensagem += `• ${qtdBase}x Kit Base (4 unidades)\n`;
-            if (qtdLanche > 0) mensagem += `• ${qtdLanche}x Kit Lanche (6 unidades)\n`;
-            if (qtdFamilia > 0) mensagem += `• ${qtdFamilia}x Kit Família (10 unidades)\n\n`;
+            let msg = `*🥟 NOVO PEDIDO — Sabor de Infância*\n\n`;
+            msg += `*Itens:*\n${itens.join('\n')}\n\n`;
+            msg += `*Total:* R$ ${total.toFixed(2).replace('.', ',')}\n\n`;
+            msg += `*Cliente:* ${nome}\n`;
+            msg += `*Telefone:* ${telefone}\n`;
+            msg += `*Tipo:* ${tipo}\n`;
+            msg += `*Endereço:* ${endereco}\n`;
+            if (referencia) msg += `*Referência:* ${referencia}\n`;
+            msg += `*Pagamento:* ${pagamento}`;
+            if (pagamento === 'Dinheiro' && troco) msg += ` (troco para R$ ${troco})`;
 
-            mensagem += `💰 *VALOR TOTAL: R$ ${totalPedido}*`;
-
-            window.open(`https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`, '_blank');
+            const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
         }
     </script>
 </body>
