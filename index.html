@@ -10,50 +10,43 @@
             --primary-light: #fff3e0;
             --secondary: #27ae60;
             --text: #4e342e;
-            --bg: #eaddcf;
+            --bg: #fffaf5; /* Fundo agora é a própria página */
+            --input-border: #f0e6df;
         }
 
         body {
             font-family: 'Segoe UI', Roboto, sans-serif;
             background-color: var(--bg); 
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px 10px;
             margin: 0;
-            min-height: 100vh;
+            padding: 0;
+            color: var(--text);
         }
 
-        /* Container Principal */
+        /* Container Principal Expandido e Sem Bordas */
         .app-container {
-            background-color: #fffaf5;
             width: 100%;
-            max-width: 500px; /* Largura padrão Mobile */
-            padding: 30px 20px;
-            border-radius: 40px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            text-align: center;
-            border: 1px solid #d7ccc8;
+            max-width: 1100px; /* Limite elegante para não esticar demais em TVs */
+            margin: 0 auto;
+            padding: 40px 20px;
             box-sizing: border-box;
-            overflow: hidden;
-            transition: all 0.3s ease;
         }
 
         header { 
-            margin-bottom: 30px; 
-            padding-bottom: 20px;
-            border-bottom: 2px dashed #d7ccc8;
+            text-align: center;
+            margin-bottom: 40px; 
+            padding-bottom: 30px;
+            border-bottom: 2px dashed #eaddcf;
         }
 
         .logo-placeholder img {
-            width: 140px;
+            width: 150px;
             height: auto;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.08));
             margin-bottom: 10px;
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: var(--primary);
             margin: 0;
             text-transform: uppercase;
@@ -62,143 +55,128 @@
         }
 
         .subtitle {
-            margin-top: 5px;
+            margin-top: 8px;
             color: #8d6e63;
             font-style: italic;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
         }
 
-        /* Estrutura de Colunas (Grid/Flex) */
+        /* Estrutura Flexível */
         .main-content {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 30px;
         }
 
         .produtos-col {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
-        .checkout-col {
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Card do Produto */
+        /* Card do Produto Premium */
         .produto {
             background: white;
-            padding: 15px;
-            border-radius: 25px;
+            padding: 20px;
+            border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
-            transition: transform 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
             border: 1px solid #fdf2e9;
-            margin: 0; /* Removido margin auto para obedecer o gap do pai */
+            transition: all 0.3s ease;
+        }
+
+        .produto:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
         }
 
         .info-produto {
             display: flex;
             align-items: center;
-            gap: 12px;
-            text-align: left;
+            gap: 15px;
         }
 
         .foto-empada {
-            width: 70px;
-            height: 70px;
-            border-radius: 18px;
+            width: 80px;
+            height: 80px;
+            border-radius: 15px;
             object-fit: cover;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
             background: #f3e5d8;
         }
 
         .nome-item {
             display: block;
             font-weight: 700;
-            color: var(--text);
-            font-size: 0.95rem;
-            margin-bottom: 4px;
+            font-size: 1.05rem;
+            margin-bottom: 5px;
         }
 
         .preco-item {
             color: var(--primary);
-            font-weight: 600;
-            font-size: 1rem;
+            font-weight: 700;
+            font-size: 1.1rem;
         }
 
-        /* Selecionador de Quantidade */
+        /* Botões de Quantidade Refinados */
         .qty-selector {
             display: flex;
             align-items: center;
-            gap: 10px;
-            background: #f8f9fa;
-            padding: 5px;
+            gap: 12px;
+            background: #fdfaf6;
+            padding: 6px;
             border-radius: 50px;
+            border: 1px solid var(--input-border);
         }
 
         .btn-qty {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             border: none;
             background: white;
             color: var(--primary);
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.2s;
         }
 
         .btn-qty:active { transform: scale(0.9); }
 
         .qty-value {
             font-weight: bold;
-            min-width: 20px;
-            color: var(--text);
+            min-width: 25px;
+            text-align: center;
+            font-size: 1.1rem;
         }
 
-        /* Total Box */
+        /* Coluna de Checkout com fundo próprio no Desktop */
+        .checkout-col {
+            display: flex;
+            flex-direction: column;
+        }
+
         .total-box {
             background: var(--primary-light);
-            color: var(--text);
-            margin-bottom: 20px;
-            padding: 20px;
-            border-radius: 25px;
+            margin-bottom: 25px;
+            padding: 25px;
+            border-radius: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border: 2px dashed var(--primary);
         }
 
-        .total-box span:first-child { font-weight: bold; text-transform: uppercase; }
+        .total-box span:first-child { font-weight: 800; text-transform: uppercase; font-size: 1rem;}
+        #valor_total_exibido { color: var(--secondary); font-size: 1.8rem; font-weight: 900; }
 
-        #valor_total_exibido {
-            color: var(--secondary);
-            font-size: 1.5rem;
-            font-weight: 800;
-        }
-
-        /* Formulário de Entrega */
-        .checkout-container {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 25px 20px;
-            border-radius: 30px;
-            text-align: left;
-            border: 1px solid white;
-            margin-bottom: 20px;
-        }
-
+        /* Formulário Modernizado */
         .checkout-container h3 {
             color: var(--primary);
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             text-transform: uppercase;
             margin-top: 0;
             margin-bottom: 20px;
@@ -210,19 +188,20 @@
         .tipo-endereco-container {
             display: flex;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .btn-tipo {
             flex: 1;
-            padding: 12px;
-            border-radius: 15px;
-            border: 1px solid #ddd;
-            background: white;
+            padding: 14px;
+            border-radius: 12px;
+            border: 2px solid var(--input-border);
+            background: #fdfaf6;
             cursor: pointer;
             font-weight: bold;
-            color: var(--text);
+            color: #8d6e63;
             transition: all 0.3s;
+            font-size: 0.95rem;
         }
 
         .btn-tipo.active {
@@ -231,153 +210,100 @@
             border-color: var(--primary);
         }
 
-        .endereco-campos {
-            display: none;
-            animation: fadeIn 0.4s ease-in;
-        }
+        .endereco-campos { display: none; animation: fadeIn 0.4s ease-in; }
 
+        /* Inputs mais suaves e arredondados */
         .checkout-container input, .checkout-container select {
             width: 100%;
-            padding: 14px;
-            margin: 8px 0;
-            border: 1px solid #ddd;
-            border-radius: 15px;
+            padding: 16px;
+            margin: 8px 0 12px;
+            border: 2px solid var(--input-border);
+            border-radius: 12px;
             box-sizing: border-box;
             background: white;
-            font-size: 14px;
-            outline: none;
+            font-size: 15px;
             color: var(--text);
+            outline: none;
+            transition: border-color 0.3s;
+            font-family: inherit;
         }
 
-        #box_troco {
-            display: none;
-            margin-top: 5px;
-            animation: fadeIn 0.3s ease-in;
+        .checkout-container input:focus, .checkout-container select:focus {
+            border-color: var(--primary);
         }
 
-        /* Botão Finalizar */
+        #box_troco { display: none; animation: fadeIn 0.3s ease-in; }
+
+        /* Botão de Finalizar */
         button.btn-finalizar {
             background: linear-gradient(135deg, var(--secondary), #2ecc71);
             color: white;
             border: none;
-            padding: 20px;
-            border-radius: 25px;
-            font-size: 1.1rem;
-            font-weight: bold;
+            padding: 22px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 800;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 10px 20px rgba(39, 174, 96, 0.2);
+            box-shadow: 0 10px 25px rgba(39, 174, 96, 0.3);
             transition: all 0.3s;
             border-bottom: 4px solid #1e8449;
+            margin-top: 10px;
+            letter-spacing: 1px;
         }
 
-        button.btn-finalizar:active {
-            transform: translateY(4px);
-            border-bottom: 0;
-        }
+        button.btn-finalizar:active { transform: translateY(4px); border-bottom: 0; }
 
-        /* JANELINHA PIX (MODAL) */
+        /* MODAL PIX */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);
+            z-index: 1000; align-items: center; justify-content: center;
         }
-
         .modal-content {
-            background: #fffaf5;
-            width: 90%;
-            max-width: 400px;
-            padding: 30px;
-            border-radius: 40px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            background: white; width: 90%; max-width: 420px; padding: 35px;
+            border-radius: 30px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
             animation: modalFade 0.3s ease-out;
         }
-
-        @keyframes modalFade {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
+        @keyframes modalFade { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
         .pix-box {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            border: 2px dashed var(--primary);
-            margin: 20px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: center;
+            background: #fdfaf6; padding: 20px; border-radius: 15px;
+            border: 2px dashed var(--primary); margin: 25px 0;
+            display: flex; flex-direction: column; gap: 15px;
         }
+        #chavePix { font-weight: 800; font-size: 1.05rem; word-break: break-all; }
+        .btn-copiar { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; }
+        .btn-prosseguir { background: var(--secondary); color: white; border: none; padding: 18px; width: 100%; border-radius: 15px; font-weight: bold; font-size: 1.1rem; cursor: pointer; box-shadow: 0 10px 20px rgba(39, 174, 96, 0.2); }
 
-        #chavePix {
-            font-weight: bold;
-            color: var(--text);
-            font-size: 1rem;
-            word-break: break-all;
-        }
-
-        .btn-copiar {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .btn-prosseguir {
-            background: var(--secondary);
-            color: white;
-            border: none;
-            padding: 18px;
-            width: 100%;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 10px;
-            box-shadow: 0 10px 20px rgba(39, 174, 96, 0.2);
-        }
-
-        footer { margin-top: 30px; font-size: 0.75rem; color: #bcaaa4; }
+        footer { margin-top: 50px; font-size: 0.85rem; color: #bcaaa4; text-align: center; }
 
         /* =========================================
-           MEDIA QUERY: VERSÃO DESKTOP (LARGURA > 900px)
+           MEDIA QUERY: VERSÃO DESKTOP
            ========================================= */
         @media (min-width: 900px) {
-            body {
-                padding: 40px 20px;
-            }
+            body { background-color: #fdf8f3; } /* Fundo bem suave no desktop */
+            
             .app-container {
-                max-width: 950px; /* Estica o container principal */
-                padding: 40px 50px;
+                padding: 50px 30px;
             }
-            
+
             .main-content {
-                flex-direction: row; /* Coloca lado a lado */
-                align-items: flex-start;
-                gap: 40px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 50px;
+                align-items: start;
             }
 
-            .produtos-col {
-                flex: 1; /* Ocupa metade da tela */
-            }
-
+            /* No desktop, criamos um card apenas para o formulário, separando dos produtos */
             .checkout-col {
-                flex: 1; /* Ocupa a outra metade */
-            }
-            
-            header {
-                margin-bottom: 40px;
+                background: white;
+                padding: 40px;
+                border-radius: 25px;
+                box-shadow: 0 15px 40px rgba(0,0,0,0.05);
+                border: 1px solid #f9f1eb;
+                position: sticky;
+                top: 30px;
             }
         }
     </style>
@@ -394,7 +320,6 @@
         </header>
 
         <div class="main-content">
-            
             <div class="produtos-col">
                 <div class="produto">
                     <div class="info-produto">
@@ -447,7 +372,7 @@
 
             <div class="checkout-col">
                 <div class="total-box">
-                    <span>TOTAL DO PEDIDO</span>
+                    <span>Total do Pedido</span>
                     <span id="valor_total_exibido">R$ 0,00</span>
                 </div>
 
@@ -494,13 +419,13 @@
 
     <div id="modalPix" class="modal-overlay">
         <div class="modal-content">
-            <h3 style="color: var(--primary); margin-top: 0;">Pagamento via Pix</h3>
-            <p style="color: var(--text); font-size: 0.9rem;">Copie a chave abaixo e envie o comprovante no WhatsApp.</p>
+            <h3 style="color: var(--primary); margin-top: 0; font-size: 1.5rem; text-transform: uppercase;">Pagamento via Pix</h3>
+            <p style="color: #8d6e63; font-size: 1rem; margin-top: 10px;">Copie a chave abaixo e envie o comprovante no WhatsApp.</p>
             <div class="pix-box">
                 <span id="chavePix">SEU_PIX_AQUI</span>
-                <button onclick="copiarPix()" class="btn-copiar">Copiar Chave</button>
+                <button onclick="copiarPix()" class="btn-copiar">COPIAR CHAVE</button>
             </div>
-            <p style="font-weight: bold; color: var(--secondary); margin-bottom: 20px;">
+            <p style="font-weight: bold; color: var(--secondary); font-size: 1.2rem; margin-bottom: 25px;">
                 Total a pagar: <span id="modal_total">R$ 0,00</span>
             </p>
             <button onclick="prosseguirWpp()" class="btn-prosseguir">Concluir no WhatsApp</button>
